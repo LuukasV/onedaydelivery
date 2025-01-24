@@ -10,6 +10,7 @@ Menen koneelle jossa sisältö jo on ➔ Päivitän etävaraston version koneell
 git pull
 
 Muutan tai lisään tiedostoja (esimerkiksi suunnitelmakuva suunnitelma-kansioon) ➔ Lisään muuttuneet ja uudet tiedostot stage-tilaan
+
 git add --all
 
 ➔ ja siirrän stage-tilan tiedon lokaaliin varastoon,
