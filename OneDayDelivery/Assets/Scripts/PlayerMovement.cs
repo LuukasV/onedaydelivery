@@ -1,0 +1,120 @@
+using Unity.VisualScripting;
+using UnityEngine;
+
+// Player movement script that allows the player to control a character. Adds mobility to character.
+// If movement is jittery. Test interpolate = None and collision detection = Discrete changes.
+public class PlayerMovement : MonoBehaviour
+{
+    [Header("Movement")]
+    public float moveSpeed;
+    public float groundDrag;
+
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 moveDirection;
+
+    // Jump variables.
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    bool readyToJump;
+    public float groundDistance = 0.4f;
+
+
+    [Header("Keybinds")]
+    public KeyCode jumpKey = KeyCode.Space;
+
+    [Header("Ground Check")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+    bool grounded;
+
+    // Variables for character physics.
+    public Transform orientationAndGroundCheck;
+    Rigidbody rb;
+
+    // Runs method that takes in player input. Also, checks if player character is on the ground or not.
+    private void Update()
+    {
+        grounded = Physics.CheckSphere(orientationAndGroundCheck.position, groundDistance, whatIsGround);
+
+        MyInput();
+        if (grounded)
+        {
+            rb.linearDamping = groundDrag;
+        }
+        else
+        {
+            rb.linearDamping = 0;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+        SpeedControl();
+    }
+
+    // Sets variables needed for player movement and rotation.
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+        ResetJump();
+    }
+
+    // Takes in player input.
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+        if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
+        //if (Input.GetButtonDown("Jump") && readyToJump && grounded)
+        {
+            readyToJump = false;
+            Jump();
+            //poista ja testaa
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+    }
+
+    // Moves player based on orientation and inputs
+    private void MovePlayer()
+    {
+        // Calculate movement direction
+        moveDirection = orientationAndGroundCheck.forward * verticalInput + orientationAndGroundCheck.right * horizontalInput;
+        // on ground        
+        if (grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        else if (!grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+    }    
+
+    // Controls characters speed. Makes sure it doesn't go faster than set speed.
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        if(flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
+    // Jump mechanics for player's character.
+    private void Jump()
+    {
+        //reset y velocity ?
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    private void ResetJump()
+    {
+        readyToJump = true;
+    }
+}
