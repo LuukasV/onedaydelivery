@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public float FallMultiplier;
 
+    //TEST!
+    bool jumpingInput;
+
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.CheckSphere(orientationAndGroundCheck.position, groundDistance, whatIsGround);
 
         MyInput();
+        //ORIGINAL SPEED CONTROL PLACEMENT
         SpeedControl();
 
         if (grounded)
@@ -58,10 +62,19 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
 
+        // Player jumps MAYBE REMOVE THIS TESTING IN FIXED UPDATE INSTEAD OF UDATE.
+        if (jumpingInput && readyToJump && grounded)
+        {
+            readyToJump = false;
+            Jump();
+        //poista ja testaa
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
         Debug.Log(rb.linearVelocity.x);
         Debug.Log(rb.linearVelocity.magnitude);
 
-        if(rb.linearVelocity.y < 0)
+        if (rb.linearVelocity.y < 0)
         {
             rb.linearVelocity += Vector3.up * Physics.gravity.y * FallMultiplier * Time.deltaTime;
         }
@@ -77,25 +90,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Takes in player input for jumps and body movement.
-    // Put this in FixedUpdate? Jumping into fixedUpdate?
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-        // Player jumps
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
-        {
-            readyToJump = false;
-            Jump();
-            //poista ja testaa
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
-        
+        verticalInput = Input.GetAxisRaw("Vertical");        
+        jumpingInput = Input.GetKey(jumpKey);
 
-        else if (!grounded && rb.linearVelocity.y < 0)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Max(-20f, rb.linearVelocity.y), rb.linearVelocity.z);
-        }
+        //ORIGINAL PLACE FOR JUMP. MAYBE DELETE THIS.
+        // Player jumps
+        //if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        //{
+        //    readyToJump = false;
+        //    Jump();
+        //poista ja testaa
+        //    Invoke(nameof(ResetJump), jumpCooldown);
+        //}
     }
 
     // Moves player based on orientation and inputs
@@ -117,10 +126,23 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-        if(flatVel.magnitude > moveSpeed)
+
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
+    // HARD CAP ON MOVESPEED, EVEN DURING JUMPING. USE THIS OR speedControl
+    private void SpeedControls()
+    {
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z);
+
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, limitedVel.y, limitedVel.z);
         }
     }
 
@@ -131,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
-
+    // Jumping cooldown.
     private void ResetJump()
     {
         readyToJump = true;
