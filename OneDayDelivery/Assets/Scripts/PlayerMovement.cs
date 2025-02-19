@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
     public float groundDistance = 0.4f;
+    public float FallMultiplier;
 
 
     [Header("Keybinds")]
@@ -40,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.CheckSphere(orientationAndGroundCheck.position, groundDistance, whatIsGround);
 
         MyInput();
+        SpeedControl();
+
         if (grounded)
         {
             rb.linearDamping = groundDrag;
@@ -53,7 +57,15 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        SpeedControl();
+
+        Debug.Log(rb.linearVelocity.x);
+        Debug.Log(rb.linearVelocity.magnitude);
+
+        if(rb.linearVelocity.y < 0)
+        {
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * FallMultiplier * Time.deltaTime;
+        }
+
     }
 
     // Sets variables needed for player movement and rotation.
@@ -64,18 +76,25 @@ public class PlayerMovement : MonoBehaviour
         ResetJump();
     }
 
-    // Takes in player input.
+    // Takes in player input for jumps and body movement.
+    // Put this in FixedUpdate? Jumping into fixedUpdate?
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
-        //if (Input.GetButtonDown("Jump") && readyToJump && grounded)
+        // Player jumps
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
             //poista ja testaa
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+        
+
+        else if (!grounded && rb.linearVelocity.y < 0)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Max(-20f, rb.linearVelocity.y), rb.linearVelocity.z);
         }
     }
 
