@@ -7,6 +7,14 @@ public class GotMailDetector : MonoBehaviour
     public AudioSource audioSource;
     public GameObject whereToTeleport;  //Grabs the x, y, z values to the mail for teleport
     public GameObject uiPointScorer;    //Does nothing yet
+    private UIManager uiManager;
+
+    //At start the script finds the UImanager script, so it can be updated when Mail is succesfully mailed
+    private void Start()
+    {
+        //UIManager script is linked with the PlayerUI component
+        uiManager = GameObject.Find("PlayerUI").GetComponent<UIManager>();
+    }
 
     //What happens when something touches the Collider whith onTrigger event
     //Something happens only if the touching object has the Tag "Mailable"
@@ -29,6 +37,9 @@ public class GotMailDetector : MonoBehaviour
             //Halts the packtet's speed, and stops the player's grabbing attempt
             collider.attachedRigidbody.linearVelocity = new Vector3(0, 0, 0);
             collider.gameObject.GetComponent<ObjectGrabbable>().Drop();
+
+            //Add point to UIscoreSystem
+            uiManager.addPoint();
         }
 
     }
