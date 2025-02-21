@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Player movement script that allows the player to control a character. Adds mobility to character.
 // If movement is jittery. Test interpolate = None and collision detection = Discrete changes.
@@ -25,10 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
     //TEST!
     bool jumpingInput;
+    bool restartInput;
 
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode restartKey = KeyCode.F1;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -48,12 +51,18 @@ public class PlayerMovement : MonoBehaviour
         //ORIGINAL SPEED CONTROL PLACEMENT
         SpeedControl();
 
+        if (restartInput)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
         if (grounded)
         {
             rb.linearDamping = groundDrag;
         }
         else
         {
+            // ORIGINAL
             rb.linearDamping = 0;
         }
     }
@@ -93,8 +102,11 @@ public class PlayerMovement : MonoBehaviour
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");        
+        verticalInput = Input.GetAxisRaw("Vertical");
         jumpingInput = Input.GetKey(jumpKey);
+        restartInput = Input.GetKey(restartKey);
+
+
 
         //ORIGINAL PLACE FOR JUMP. MAYBE DELETE THIS.
         // Player jumps
