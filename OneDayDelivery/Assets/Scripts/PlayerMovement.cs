@@ -1,5 +1,7 @@
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Player movement script that allows the player to control a character. Adds mobility to character.
 // If movement is jittery. Test interpolate = None and collision detection = Discrete changes.
@@ -20,10 +22,16 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
     public float groundDistance = 0.4f;
+    public float FallMultiplier;
+
+    //TEST!
+    bool jumpingInput;
+    bool restartInput;
 
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode restartKey = KeyCode.F1;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -40,12 +48,21 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.CheckSphere(orientationAndGroundCheck.position, groundDistance, whatIsGround);
 
         MyInput();
+        //ORIGINAL SPEED CONTROL PLACEMENT
+        SpeedControl();
+
+        if (restartInput)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
         if (grounded)
         {
             rb.linearDamping = groundDrag;
         }
         else
         {
+            // ORIGINAL
             rb.linearDamping = 0;
         }
     }
@@ -53,7 +70,24 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        SpeedControl();
+
+        // Player jumps MAYBE REMOVE THIS TESTING IN FIXED UPDATE INSTEAD OF UDATE.
+        if (jumpingInput && readyToJump && grounded)
+        {
+            readyToJump = false;
+            Jump();
+        //poista ja testaa
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        Debug.Log(rb.linearVelocity.x);
+        Debug.Log(rb.linearVelocity.magnitude);
+
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * FallMultiplier * Time.deltaTime;
+        }
+
     }
 
     // Sets variables needed for player movement and rotation.
@@ -64,19 +98,25 @@ public class PlayerMovement : MonoBehaviour
         ResetJump();
     }
 
-    // Takes in player input.
+    // Takes in player input for jumps and body movement.
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
-        //if (Input.GetButtonDown("Jump") && readyToJump && grounded)
-        {
-            readyToJump = false;
-            Jump();
-            //poista ja testaa
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
+        jumpingInput = Input.GetKey(jumpKey);
+        restartInput = Input.GetKey(restartKey);
+
+
+
+        //ORIGINAL PLACE FOR JUMP. MAYBE DELETE THIS.
+        // Player jumps
+        //if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        //{
+        //    readyToJump = false;
+        //    Jump();
+        //poista ja testaa
+        //    Invoke(nameof(ResetJump), jumpCooldown);
+        //}
     }
 
     // Moves player based on orientation and inputs
@@ -98,10 +138,23 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-        if(flatVel.magnitude > moveSpeed)
+
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
+    // HARD CAP ON MOVESPEED, EVEN DURING JUMPING. USE THIS OR speedControl
+    private void SpeedControls()
+    {
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z);
+
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, limitedVel.y, limitedVel.z);
         }
     }
 
@@ -112,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
-
+    // Jumping cooldown.
     private void ResetJump()
     {
         readyToJump = true;
