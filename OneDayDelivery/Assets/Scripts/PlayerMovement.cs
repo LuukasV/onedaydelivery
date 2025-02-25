@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public float FallMultiplier;
 
-    //TEST!
     bool jumpingInput;
     bool restartInput;
 
@@ -79,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         //poista ja testaa
             Invoke(nameof(ResetJump), jumpCooldown);
         }
-
+        jumpingInput = false;
         Debug.Log(rb.linearVelocity.x);
         Debug.Log(rb.linearVelocity.magnitude);
 
@@ -103,7 +102,8 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        jumpingInput = Input.GetKey(jumpKey);
+        //jumpingInput = Input.GetKey(jumpKey);
+        jumpingInput = jumpingInput || Input.GetKey(jumpKey);
         restartInput = Input.GetKey(restartKey);
 
 

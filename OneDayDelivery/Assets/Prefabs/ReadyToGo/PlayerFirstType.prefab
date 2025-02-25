@@ -98,7 +98,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53972714195002157}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 91b71b44c462eee4385600d0cf0a97b8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -379,7 +379,9 @@ MonoBehaviour:
   jumpCooldown: 0.25
   airMultiplier: 0.4
   groundDistance: 0.4
+  FallMultiplier: 0
   jumpKey: 32
+  restartKey: 282
   playerHeight: 3
   whatIsGround:
     serializedVersion: 2
