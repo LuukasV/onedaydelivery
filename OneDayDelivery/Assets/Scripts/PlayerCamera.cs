@@ -12,6 +12,9 @@ public class PlayerCamera : MonoBehaviour
     public float sensX;
     public float sensY;
 
+    [SerializeField] public int minValueAngle;
+    [SerializeField] public int posValueAngle;
+
     // Player's physical body transform data
     public Transform Body;
     // Camera transform data. Acts as players sight and head.
@@ -32,7 +35,7 @@ public class PlayerCamera : MonoBehaviour
 
         MouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
         Angle -= MouseY;
-        Angle = Mathf.Clamp(Angle, -30, 45);
+        Angle = Mathf.Clamp(Angle, minValueAngle, posValueAngle);
         Head.localRotation = Quaternion.Euler(Angle, 0, 0);
     }
 }
