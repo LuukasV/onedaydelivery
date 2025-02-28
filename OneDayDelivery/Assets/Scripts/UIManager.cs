@@ -16,12 +16,13 @@ public class UIManager : MonoBehaviour
     private Text timerText;
     public float secondsInTimer;
     private bool negatiivinen;
+    public int maxBoxes;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         boxesMailedScore = 0;
-        scoreText.text = "Packets Mailed: " + boxesMailedScore.ToString();
+        scoreText.text = "Packets Delivered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
         updateTimer(secondsInTimer);
 
         negatiivinen = false;
@@ -43,7 +44,7 @@ public class UIManager : MonoBehaviour
     public void addPoint()
     {
         boxesMailedScore++;
-        scoreText.text = "Packets Mailed: " + boxesMailedScore.ToString();
+        scoreText.text = "Packets Delievered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
     }
 
     //Updates the timer, and changes the time format from pure seconds, to hh:mm:ss:s

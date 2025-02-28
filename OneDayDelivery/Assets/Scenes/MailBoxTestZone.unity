@@ -853,6 +853,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerFirstType
       objectReference: {fileID: 0}
+    - target: {fileID: 3467196812182749902, guid: e0bf16bf8a6a37b4e9f62e8e029afb52, type: 3}
+      propertyPath: MouseX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467196812182749902, guid: e0bf16bf8a6a37b4e9f62e8e029afb52, type: 3}
+      propertyPath: MouseY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467196812182749902, guid: e0bf16bf8a6a37b4e9f62e8e029afb52, type: 3}
+      propertyPath: minValueAngle
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467196812182749902, guid: e0bf16bf8a6a37b4e9f62e8e029afb52, type: 3}
+      propertyPath: posValueAngle
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 3558368958177630159, guid: e0bf16bf8a6a37b4e9f62e8e029afb52, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1085,6 +1101,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1474865779287583807, guid: 79d1536191b826d4786b29f6b0ae8a4d, type: 3}
+      propertyPath: maxBoxes
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3524425166069611752, guid: 79d1536191b826d4786b29f6b0ae8a4d, type: 3}
       propertyPath: m_Name
       value: PlayerUI
