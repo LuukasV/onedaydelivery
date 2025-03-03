@@ -79,8 +79,8 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
         jumpingInput = false;
-        Debug.Log(rb.linearVelocity.x);
-        Debug.Log(rb.linearVelocity.magnitude);
+        //Debug.Log(rb.linearVelocity.x);
+        //Debug.Log(rb.linearVelocity.magnitude);
 
         if (rb.linearVelocity.y < 0)
         {
