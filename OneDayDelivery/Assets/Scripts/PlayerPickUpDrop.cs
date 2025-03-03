@@ -12,23 +12,32 @@ public class PlayerPickUpDrop : MonoBehaviour
     [SerializeField] private Transform objectGrabPointTransform;
     [SerializeField] private LayerMask pickUpLayerMask;
     [SerializeField] private float throwForce;
-    
+
+    // TESTING PARENT
+    [SerializeField] private Transform parent;
+
     [Header("Keybinds")]
     public KeyCode throwKey = KeyCode.F;
     public KeyCode intoPocket = KeyCode.R;
     public KeyCode outOfPocket = KeyCode.Y;
     public KeyCode pickUp = KeyCode.E;
 
+    //private Component objectGrabbablen sijaan?
+    //private Component objectGrabbable;?
+
     private ObjectGrabbable objectGrabbable;
-    private int packageCarry;
-    [SerializeField] private GameObject packagePrefab;
 
     private PlayerMovement speedChanger;
+    private ObjectGrabbable[] inventory;
+    [SerializeField] private int sizeOfInventory;
+    private int indexInventory;
+    Transform parentTransform;
 
     void Start()
     {
         speedChanger = playerParentBody.GetComponent<PlayerMovement>();
-        packageCarry = 0;
+        indexInventory = 0;
+        inventory = new ObjectGrabbable[sizeOfInventory];
     }
 
     private void Update()
@@ -42,11 +51,22 @@ public class PlayerPickUpDrop : MonoBehaviour
                 float pickUpDistance = 4f;
                 if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
                 {
-                    if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+                    //Debug.Log("Raycast hit: " + raycastHit.transform.name);
+                    //Debug.Log("Raycast hit object with tag: " + raycastHit.transform.tag);
+                    //Debug.Log("Raycast hit collider with tag: " + raycastHit.collider.transform.tag);
+
+                    // Original, add as ELSE IF? Or original as IF and spherecast as ELSEIF?
+                    //if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+
+                    if (raycastHit.collider.transform.CompareTag("pickupCollider"))
                     {
-                        objectGrabbable.Grab(objectGrabPointTransform);
+                        parentTransform = raycastHit.collider.transform.parent;
+                        objectGrabbable = parentTransform.GetComponent<ObjectGrabbable>();
+                        objectGrabbable.Grab(objectGrabPointTransform, parent);
                     }
-                }
+                 }
+                //  ELSE IF speherecasti?
+                //  LISÄä laatioklle laspi ja collider trigger, omalle layerille.
             }
             // Currently carrying something, drop
             else
@@ -60,8 +80,9 @@ public class PlayerPickUpDrop : MonoBehaviour
         else if (Input.GetKeyDown(throwKey) && objectGrabbable != null)
         {
             Vector3 throwDirection = objectGrabPointTransform.forward;
-            objectGrabbable.Throw(throwForce, throwDirection);
+            // changed order of drop and throw
             objectGrabbable.Drop();
+            objectGrabbable.Throw(throwForce, throwDirection);
             objectGrabbable = null;
         }
 
@@ -69,32 +90,29 @@ public class PlayerPickUpDrop : MonoBehaviour
         else if (Input.GetKeyDown(intoPocket) && objectGrabbable != null)
         {
             // Alterantive method for inventory system? 
-            //objectGrabbable.gameObject.SetActive(false);
-
-            speedChanger.moveSpeed -= 2;
-            Destroy(objectGrabbable.gameObject);
-            objectGrabbable = null;
-            packageCarry +=1;
+            if (indexInventory < sizeOfInventory)
+            {
+                inventory[indexInventory] = objectGrabbable;
+                objectGrabbable.gameObject.SetActive(false);
+                indexInventory++;
+                speedChanger.moveSpeed -= 2;
+                objectGrabbable = null;
+            }
         }
 
         // Get packages out of inventory
         // Alternative method for key input: (Input.GetKeyDown(KeyCode.Y)
-        else if (Input.GetKeyDown(outOfPocket) && objectGrabbable == null && packageCarry > 0)
+        else if (Input.GetKeyDown(outOfPocket) && objectGrabbable == null)
         {
-            // Alterantive method for inventory system? 
-            //objectGrabbable.gameObject.SetActive(true);
-
-            packageCarry -=1;
-            speedChanger.moveSpeed += 2;
-
-            // Creates a new package into players hand.
-            GameObject newPackage =  Instantiate(packagePrefab, objectGrabPointTransform.position, Quaternion.identity);
-
-            objectGrabbable = newPackage.GetComponent<ObjectGrabbable>();
-            if (objectGrabbable != null)
+            if (0 < indexInventory)
             {
-                // Grab the newly instantiated object
-                objectGrabbable.Grab(objectGrabPointTransform);
+                objectGrabbable = inventory[indexInventory-1].GetComponent<ObjectGrabbable>();
+                objectGrabbable.transform.position = objectGrabPointTransform.transform.position;
+                objectGrabbable.transform.rotation = Quaternion.Euler(0, 0, 0);
+                objectGrabbable.gameObject.SetActive(true);
+                objectGrabbable.Grab(objectGrabPointTransform, parent);
+                indexInventory--;
+                speedChanger.moveSpeed += 2;
             }
         }
     }
