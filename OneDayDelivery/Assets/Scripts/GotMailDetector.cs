@@ -8,12 +8,14 @@ public class GotMailDetector : MonoBehaviour
     public GameObject whereToTeleport;  //Grabs the x, y, z values to the mail for teleport
     public GameObject uiPointScorer;    //Does nothing yet
     private UIManager uiManager;
+    private bool maxAmountPerBox;
 
     //At start the script finds the UImanager script, so it can be updated when Mail is succesfully mailed
     private void Start()
     {
         //UIManager script is linked with the PlayerUI component
         uiManager = GameObject.Find("PlayerUI").GetComponent<UIManager>();
+        maxAmountPerBox = true;
     }
 
     //What happens when something touches the Collider whith onTrigger event
@@ -22,7 +24,7 @@ public class GotMailDetector : MonoBehaviour
     {
         //Play the sound only if the tag is correct
         //Also, by popular demand, grab the object and insert it inside the mailbox
-        if(collider.gameObject.tag == "Mailable")
+        if(collider.gameObject.tag == "Mailable" && maxAmountPerBox)
         {
             //Added a point to UI-element
             audioSource.Play();
@@ -34,12 +36,16 @@ public class GotMailDetector : MonoBehaviour
             //Changes the x, y, and z coordinates of the box to (hopefully) inside the mailbox
             collider.gameObject.transform.position = new Vector3(xcordinate, ycordinate, zcordinate);
 
-            //Halts the packtet's speed, and stops the player's grabbing attempt
+            //Halts the packtet's speed, and stops the player's grabbing attempt and disables grabbing the object permanently
             collider.attachedRigidbody.linearVelocity = new Vector3(0, 0, 0);
-            collider.gameObject.GetComponent<ObjectGrabbable>().Drop();
+            collider.gameObject.GetComponent<ObjectGrabbable>().Drop();        
 
             //Add point to UIscoreSystem
             uiManager.addPoint();
+            maxAmountPerBox = false;
+
+            collider.gameObject.tag = "Untagged";
+            collider.transform.Find("pickupCollider").tag = "Untagged";
         }
 
     }
