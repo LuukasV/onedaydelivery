@@ -13,7 +13,7 @@ public class EscapeManager : MonoBehaviour
     }
 
     //When the Player touches the assigned collisonZone, something happens
-    private void OnCollisionEnter(Collision collider)
+    private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
