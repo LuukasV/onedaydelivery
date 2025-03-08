@@ -21,25 +21,42 @@ public class UIManager : MonoBehaviour
     public int maxBoxes;
     public GameObject escapeZone; //Object that is activated when score is full
     private bool timerActive;
+    public GameObject popUpCanvas;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //The Cursor is made invisible to guarantee the working of certain menu elements
+        UnityEngine.Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
         boxesMailedScore = 0;
         scoreText.text = "Packets Delivered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
-        updateTimer(secondsInTimer);
+        UpdateTimer(secondsInTimer);
 
         timerActive = true;
         negatiivinen = false;
     }
 
     //Every update, the timer goes down (and updates)
+    //We also check if esc-button is pressed, if it is. We activate the pop-up window and pause the game (and timer)
     private void Update()
     {
-        if(timerActive)
+        if (Input.GetKeyDown("escape"))
+        {
+            //Also button makes the cursor visible
+            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+            popUpCanvas.SetActive(true);
+            Time.timeScale = 0;
+            timerActive = false;
+        }
+
+        if (timerActive)
         {
             secondsInTimer = secondsInTimer - Time.deltaTime;
-            updateTimer(secondsInTimer);
+            UpdateTimer(secondsInTimer);
         }
 
         if(secondsInTimer < 0)
@@ -63,7 +80,7 @@ public class UIManager : MonoBehaviour
     }
 
     //Updates the timer, and changes the time format from pure seconds, to hh:mm:ss:s
-    public void updateTimer(float seconds)
+    public void UpdateTimer(float seconds)
     {
         TimeSpan timer = TimeSpan.FromSeconds(seconds);
 
@@ -87,5 +104,25 @@ public class UIManager : MonoBehaviour
     {
         escapeText.text = "Well done :D";
         timerActive = false;
+    }
+
+    //Goes back to main menu
+    public void BackToMenu()
+    {
+        Debug.Log("Quit button has been pressed");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    //Deactivates Quit menu and resumes game/timer
+    public void ContinueGame()
+    {
+        //Also button makes the cursor invisible again
+        UnityEngine.Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+        Debug.Log("Cancel button has been pressed");
+        popUpCanvas.SetActive(false);
+        Time.timeScale = 1;
+        timerActive = true;
     }
 }
