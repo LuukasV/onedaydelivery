@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mailable
   - pickupCollider
+  - PlayerUI
   layers:
   - Default
   - TransparentFX

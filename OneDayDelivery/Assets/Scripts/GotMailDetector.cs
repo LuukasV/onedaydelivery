@@ -6,7 +6,6 @@ public class GotMailDetector : MonoBehaviour
 {
     public AudioSource audioSource;
     public GameObject whereToTeleport;  //Grabs the x, y, z values to the mail for teleport
-    public GameObject uiPointScorer;    //Does nothing yet
     private UIManager uiManager;
     private bool maxAmountPerBox;
 
@@ -14,7 +13,8 @@ public class GotMailDetector : MonoBehaviour
     private void Start()
     {
         //UIManager script is linked with the PlayerUI component
-        uiManager = GameObject.Find("PlayerUI").GetComponent<UIManager>();
+        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
+        //Checks if newer version of UI is available, if old was not found
         maxAmountPerBox = true;
     }
 
@@ -41,7 +41,7 @@ public class GotMailDetector : MonoBehaviour
             collider.gameObject.GetComponent<ObjectGrabbable>().Drop();        
 
             //Add point to UIscoreSystem
-            uiManager.addPoint();
+            uiManager.AddPoint();
             maxAmountPerBox = false;
 
             collider.gameObject.tag = "Untagged";
