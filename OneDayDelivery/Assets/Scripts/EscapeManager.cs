@@ -9,7 +9,7 @@ public class EscapeManager : MonoBehaviour
     private void Start()
     {
         //UIManager script is linked with the PlayerUI component
-        uiManager = GameObject.Find("PlayerUI").GetComponent<UIManager>();
+        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
     //When the Player touches the assigned collisonZone, something happens
@@ -17,7 +17,7 @@ public class EscapeManager : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            uiManager.stopTimer();
+            uiManager.EndLevel();
         }
     }
 

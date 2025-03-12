@@ -246,6 +246,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pakettiWithScripts
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d857984d133f76f4e97c7cbbdc78c6b8, type: 3}
+      propertyPath: m_TagString
+      value: Mailable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 65702495048144492, guid: d857984d133f76f4e97c7cbbdc78c6b8, type: 3}
@@ -382,7 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9414c731774217243ae27299aba83e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source: {fileID: 7360368309654740905}
   target: {fileID: 0}
   audioSource: {fileID: 2613886228889510308}
   action: 0

@@ -23,15 +23,22 @@ public class UIManager : MonoBehaviour
     private bool timerActive;
     public GameObject popUpCanvas;
 
+    [SerializeField]
+    private Text backpackScore;
+    private int boxesInBackpack;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //The Cursor is made invisible to guarantee the working of certain menu elements
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;     //Tells the game to run, just in case
 
         boxesMailedScore = 0;
-        scoreText.text = "Packets Delivered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
+        boxesInBackpack = 0;
+        backpackScore.text = boxesInBackpack.ToString();
+        scoreText.text = "Packages Delivered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
         UpdateTimer(secondsInTimer);
 
         timerActive = true;
@@ -66,7 +73,7 @@ public class UIManager : MonoBehaviour
     }
 
     //Adds one point to the UI's score system and activates escape zone if the score is full
-    public void addPoint()
+    public void AddPoint()
     {
         boxesMailedScore++;
         scoreText.text = "Packets Delievered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
@@ -74,7 +81,7 @@ public class UIManager : MonoBehaviour
         if(boxesMailedScore >= maxBoxes)
         {
             escapeText.text = "Return to the postmobile to exit the level!";
-            activateEscape();
+            ActivateEscape();
         }
 
     }
@@ -94,16 +101,18 @@ public class UIManager : MonoBehaviour
     }
 
     //Activates the GameObject assigned to escapeZone
-    public void activateEscape()
+    public void ActivateEscape()
     {
         escapeZone.SetActive(true);
     }
 
-    //Stops the count
-    public void stopTimer()
+    //End the level, initiates scoring, and returns the player to Main Menu
+    public void EndLevel()
     {
         escapeText.text = "Well done :D";
         timerActive = false;
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     //Goes back to main menu
@@ -124,5 +133,19 @@ public class UIManager : MonoBehaviour
         popUpCanvas.SetActive(false);
         Time.timeScale = 1;
         timerActive = true;
+    }
+
+    //Increases the backpack score on the right side bottom by one
+    public void AddPointToBackpackScore()
+    {
+        boxesInBackpack++;
+        backpackScore.text = boxesInBackpack.ToString();
+    }
+
+    //Decreases the backpack score on the right side bottom by one
+    public void RemovePointFromBackpackScore()
+    {
+        boxesInBackpack--;
+        backpackScore.text = boxesInBackpack.ToString();
     }
 }
