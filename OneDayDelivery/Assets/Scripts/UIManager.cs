@@ -23,6 +23,10 @@ public class UIManager : MonoBehaviour
     private bool timerActive;
     public GameObject popUpCanvas;
 
+    [SerializeField]
+    private Text backpackScore;
+    private int boxesInBackpack;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +36,8 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;     //Tells the game to run, just in case
 
         boxesMailedScore = 0;
+        boxesInBackpack = 0;
+        backpackScore.text = boxesInBackpack.ToString();
         scoreText.text = "Packages Delivered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
         UpdateTimer(secondsInTimer);
 
@@ -127,5 +133,19 @@ public class UIManager : MonoBehaviour
         popUpCanvas.SetActive(false);
         Time.timeScale = 1;
         timerActive = true;
+    }
+
+    //Increases the backpack score on the right side bottom by one
+    public void AddPointToBackpackScore()
+    {
+        boxesInBackpack++;
+        backpackScore.text = boxesInBackpack.ToString();
+    }
+
+    //Decreases the backpack score on the right side bottom by one
+    public void RemovePointFromBackpackScore()
+    {
+        boxesInBackpack--;
+        backpackScore.text = boxesInBackpack.ToString();
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 //Controller for the Main Menu and its functions
 //Includes functions for all main menu buttons
+//Manages information on player score/money between levels
 public class MainMenuController : MonoBehaviour
 {
     public GameObject popUpCanvas;
