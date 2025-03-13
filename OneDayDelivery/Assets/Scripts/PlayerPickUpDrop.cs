@@ -11,10 +11,22 @@ public class PlayerPickUpDrop : MonoBehaviour
     [SerializeField] private Transform playerCameraTransform;
     [SerializeField] private Transform objectGrabPointTransform;
     [SerializeField] private LayerMask pickUpLayerMask;
-    [SerializeField] private float throwForce;
-
-    // TESTING PARENT
     [SerializeField] private Transform parent;
+
+    //private Component objectGrabbablen instead?
+    //private Component objectGrabbable;?
+
+    private ObjectGrabbable objectGrabbable;
+
+    private PlayerMovement speedChanger;
+    private ObjectGrabbable[] inventory;
+    private int indexInventory;
+    Transform parentTransform;
+
+    [Header("Changable values for play testing")]
+    [SerializeField] private int sizeOfInventory;
+    [SerializeField] private int speedChangeOfInventory;
+    [SerializeField] private float throwForce;
 
     [Header("Keybinds")]
     public KeyCode throwKey = KeyCode.F;
@@ -22,16 +34,6 @@ public class PlayerPickUpDrop : MonoBehaviour
     public KeyCode outOfPocket = KeyCode.Y;
     public KeyCode pickUp = KeyCode.E;
 
-    //private Component objectGrabbablen sijaan?
-    //private Component objectGrabbable;?
-
-    private ObjectGrabbable objectGrabbable;
-
-    private PlayerMovement speedChanger;
-    private ObjectGrabbable[] inventory;
-    [SerializeField] private int sizeOfInventory;
-    private int indexInventory;
-    Transform parentTransform;
 
     void Start()
     {
@@ -95,7 +97,7 @@ public class PlayerPickUpDrop : MonoBehaviour
                 inventory[indexInventory] = objectGrabbable;
                 objectGrabbable.gameObject.SetActive(false);
                 indexInventory++;
-                speedChanger.moveSpeed -= 2;
+                speedChanger.moveSpeed -= speedChangeOfInventory;
                 objectGrabbable = null;
             }
         }
@@ -112,7 +114,7 @@ public class PlayerPickUpDrop : MonoBehaviour
                 objectGrabbable.gameObject.SetActive(true);
                 objectGrabbable.Grab(objectGrabPointTransform, parent);
                 indexInventory--;
-                speedChanger.moveSpeed += 2;
+                speedChanger.moveSpeed += speedChangeOfInventory;
             }
         }
     }
