@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float groundDrag;
+    public float airDrag;
+
 
     float horizontalInput;
     float verticalInput;
@@ -62,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             // ORIGINAL
-            rb.linearDamping = 0;
+            rb.linearDamping = airDrag;
         }
     }
 
@@ -75,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         {
             readyToJump = false;
             Jump();
-        //poista ja testaa
+        //remove and test?
             Invoke(nameof(ResetJump), jumpCooldown);
         }
         jumpingInput = false;
@@ -102,21 +104,8 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        //jumpingInput = Input.GetKey(jumpKey);
         jumpingInput = jumpingInput || Input.GetKey(jumpKey);
         restartInput = Input.GetKey(restartKey);
-
-
-
-        //ORIGINAL PLACE FOR JUMP. MAYBE DELETE THIS.
-        // Player jumps
-        //if (Input.GetKey(jumpKey) && readyToJump && grounded)
-        //{
-        //    readyToJump = false;
-        //    Jump();
-        //poista ja testaa
-        //    Invoke(nameof(ResetJump), jumpCooldown);
-        //}
     }
 
     // Moves player based on orientation and inputs
