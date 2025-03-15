@@ -18,6 +18,8 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     private ObjectGrabbable objectGrabbable;
 
+    private UIManager uiManager;
+
     private PlayerMovement speedChanger;
     private ObjectGrabbable[] inventory;
     private int indexInventory;
@@ -40,6 +42,9 @@ public class PlayerPickUpDrop : MonoBehaviour
         speedChanger = playerParentBody.GetComponent<PlayerMovement>();
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
+
+        //UIManager script is linked with the PlayerUI component
+        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
     private void Update()
@@ -99,6 +104,8 @@ public class PlayerPickUpDrop : MonoBehaviour
                 indexInventory++;
                 speedChanger.moveSpeed -= speedChangeOfInventory;
                 objectGrabbable = null;
+
+                uiManager.AddPointToBackpackScore();
             }
         }
 
@@ -115,6 +122,8 @@ public class PlayerPickUpDrop : MonoBehaviour
                 objectGrabbable.Grab(objectGrabPointTransform, parent);
                 indexInventory--;
                 speedChanger.moveSpeed += speedChangeOfInventory;
+
+                uiManager.RemovePointFromBackpackScore();
             }
         }
     }
