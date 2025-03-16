@@ -7,6 +7,8 @@ TagManager:
   - Mailable
   - pickupCollider
   - PlayerUI
+  - jumpBuff
+  - throwBuff
   layers:
   - Default
   - TransparentFX
