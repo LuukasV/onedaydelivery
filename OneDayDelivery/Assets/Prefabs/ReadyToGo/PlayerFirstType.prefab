@@ -131,13 +131,14 @@ MonoBehaviour:
   pickUpLayerMask:
     serializedVersion: 2
     m_Bits: 119
-  throwForce: 50
   parent: {fileID: 3558368958177630159}
+  sizeOfInventory: 3
+  speedChangeOfInventory: 0
+  throwForce: 50
   throwKey: 102
   intoPocket: 114
   outOfPocket: 121
   pickUp: 101
-  sizeOfInventory: 3
 --- !u!1 &278864134091597429
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +378,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   groundDrag: 3
+  airDrag: 0
+  walkSpeed: 3
   jumpForce: 20
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -384,11 +387,15 @@ MonoBehaviour:
   FallMultiplier: 0
   jumpKey: 32
   restartKey: 282
+  walkKey: 304
+  throwForceIncrAmount: 10
+  jumpForceIncrAmount: 10
   playerHeight: 3
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   orientationAndGroundCheck: {fileID: 1732774800039451423}
+  accessToThrowForce: {fileID: 2358374650388538449}
 --- !u!54 &2826528113187531088
 Rigidbody:
   m_ObjectHideFlags: 0
