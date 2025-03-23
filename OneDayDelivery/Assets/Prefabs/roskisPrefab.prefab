@@ -138,16 +138,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 38.482002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 38.482002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 38.482002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.72
+      value: -7.7056
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.0000005
+      value: 0.359
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.78
+      value: 8.7861
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -198,13 +210,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7424743644731397330}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3044642622406144403}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5782950087021842408}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4274338054681393161}
   m_SourcePrefab: {fileID: 100100000, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
 --- !u!4 &8485694464989622471 stripped
 Transform:
@@ -216,29 +228,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
   m_PrefabInstance: {fileID: 8235262194318120748}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &7424743644731397330
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117799699410332285}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.014689646
-  m_Height: 0.0213606
-  m_Direction: 1
-  m_Center: {x: 0.00023414986, y: -0.000099464305, z: 0.004689648}
 --- !u!64 &3044642622406144403
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -258,7 +247,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5211943252368054919, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
 --- !u!114 &5782950087021842408
@@ -277,3 +266,30 @@ MonoBehaviour:
   target: {fileID: 0}
   audioSource: {fileID: 8623530661983668662}
   action: 0
+--- !u!54 &4274338054681393161
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117799699410332285}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
