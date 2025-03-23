@@ -14,21 +14,19 @@ public class CompassManager : MonoBehaviour
 
     float compassUnit;
 
-    //TODO: Add CompassFlags from UIManager?
-    public CompassIcon compassIcon1;
-    public CompassIcon compassIcon2;
-    public CompassIcon compassIcon3;
-    public CompassIcon compassIcon4;
-
     private void Start()
     {
         compassUnit = compassImage.rectTransform.rect.width / 360f;
 
-        //TODO: Add CompassFlags from UIManager?
-        AddCompassIcon(compassIcon1);
-        AddCompassIcon(compassIcon2);
-        AddCompassIcon(compassIcon3);
-        AddCompassIcon(compassIcon4);
+        //Adds all CompassFlag-tags to the compass
+        GameObject[] compassTagObjects;
+        compassTagObjects = GameObject.FindGameObjectsWithTag("CompassFlag");
+        foreach (GameObject flag in compassTagObjects)
+        {
+            CompassIcon icon = flag.GetComponent<CompassIcon>();
+            AddCompassIcon(icon);
+        }
+
     }
 
     // Update is called once per frame
