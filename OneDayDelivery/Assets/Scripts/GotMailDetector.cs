@@ -9,6 +9,10 @@ public class GotMailDetector : MonoBehaviour
     private UIManager uiManager;
     private bool maxAmountPerBox;
 
+    public int id;
+    public CompassIcon myIcon;
+    private CompassManager uiCompassManager;
+
     //At start the script finds the UImanager script, so it can be updated when Mail is succesfully mailed
     private void Start()
     {
@@ -16,6 +20,9 @@ public class GotMailDetector : MonoBehaviour
         uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
         //Checks if newer version of UI is available, if old was not found
         maxAmountPerBox = true;
+        //Gives the boxes ID to its CompassIcon element (so its specific icon in the compass can be identified)
+        myIcon.setID(id);
+        uiCompassManager = GameObject.FindWithTag("PlayerUI").GetComponentInChildren<CompassManager>();
     }
 
     //What happens when something touches the Collider whith onTrigger event
@@ -38,7 +45,11 @@ public class GotMailDetector : MonoBehaviour
 
             //Halts the packtet's speed, and stops the player's grabbing attempt and disables grabbing the object permanently
             collider.attachedRigidbody.linearVelocity = new Vector3(0, 0, 0);
-            collider.gameObject.GetComponent<ObjectGrabbable>().Drop();        
+            ObjectGrabbable paketti = collider.gameObject.GetComponent<ObjectGrabbable>();
+            if(paketti != null)
+            {
+                paketti.Drop();
+            }       
 
             //Add point to UIscoreSystem
             uiManager.AddPoint();
@@ -46,6 +57,9 @@ public class GotMailDetector : MonoBehaviour
 
             collider.gameObject.tag = "Untagged";
             collider.transform.Find("pickupCollider").tag = "Untagged";
+
+            //Removes the postboxe's icon in the Player's Compass
+            uiCompassManager.disableSpecificIcon(id);
         }
 
     }

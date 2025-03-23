@@ -64,4 +64,20 @@ public class CompassManager : MonoBehaviour
         return new Vector2(compassUnit * angle, 0f);
 
     }
+
+    //Disablees the icon in the compass with the given id
+    public void disableSpecificIcon(int idOfIcon)
+    {
+        for (int i = 0; i < compassIcons.Count; i++)
+        {
+            CompassIcon icon = compassIcons[i];
+            if (icon.getID()  == idOfIcon)
+            {
+                Destroy(icon.image.gameObject);
+                Destroy(icon.gameObject);
+                compassIcons.Remove(icon);
+                i--;
+            }
+        }
+    }
 }
