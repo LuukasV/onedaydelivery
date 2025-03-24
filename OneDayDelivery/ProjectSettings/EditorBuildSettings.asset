@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/MaineMenu.unity
     guid: 868f5c0cd53b1164db8b8e758bd8484a
   - enabled: 1
-    path: Assets/Scenes/Prototype_V1.unity
-    guid: a9a9ded929b29944fbc29a3be125eee3
-  - enabled: 1
+    path: Assets/Scenes/LevelOne.unity
+    guid: 323ad81e04b86d14494dab5eb00a71b1
+  - enabled: 0
     path: Assets/Scenes/MailBoxTestZone.unity
     guid: 14202bc878e84c24db7922fa3aeb78af
+  - enabled: 0
+    path: Assets/Scenes/Prototype_V1.unity
+    guid: a9a9ded929b29944fbc29a3be125eee3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
