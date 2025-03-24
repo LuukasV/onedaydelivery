@@ -7,6 +7,7 @@ TagManager:
   - Mailable
   - pickupCollider
   - PlayerUI
+  - CompassFlag
   - jumpBuff
   - throwBuff
   layers:
