@@ -127,4 +127,11 @@ public class PlayerPickUpDrop : MonoBehaviour
             }
         }
     }
+
+    // maek variable public? instead of it being private and having a public method.
+    // keep things private so you cant change them from outside the class but in this case ok?
+    public void throwForceBooster(float incrAmount)
+    {
+        throwForce += incrAmount;
+    }
 }

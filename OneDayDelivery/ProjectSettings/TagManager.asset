@@ -8,6 +8,8 @@ TagManager:
   - pickupCollider
   - PlayerUI
   - CompassFlag
+  - jumpBuff
+  - throwBuff
   layers:
   - Default
   - TransparentFX

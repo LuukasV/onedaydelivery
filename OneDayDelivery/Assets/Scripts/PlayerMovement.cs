@@ -8,15 +8,16 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
+    // Left, right, forward and back player movement input.
+    float horizontalInput;
+    float verticalInput;
+    Vector3 moveDirection;
+
+    // Variables determining player movement speed and drag.
     public float moveSpeed;
     public float groundDrag;
     public float airDrag;
-
-
-    float horizontalInput;
-    float verticalInput;
-
-    Vector3 moveDirection;
+    public float walkSpeed;
 
     // Jump variables.
     public float jumpForce;
@@ -26,13 +27,19 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public float FallMultiplier;
 
-    bool jumpingInput;
-    bool restartInput;
-
-
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode restartKey = KeyCode.F1;
+    public KeyCode walkKey = KeyCode.LeftShift;
+
+    // Variables used for registering player input.
+    bool jumpingInput;
+    bool restartInput;
+    bool walkInput;
+
+    [Header("Changable values for play testing")]
+    [SerializeField] private float throwForceIncrAmount;
+    [SerializeField] private float jumpForceIncrAmount;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -40,8 +47,14 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     // Variables for character physics.
+    // serialize field here rpivate
     public Transform orientationAndGroundCheck;
     Rigidbody rb;
+
+    [Header("Variable change access")]
+    // how does this work in practice? What variable type. with player pickup drop type.
+    [SerializeField] private Transform accessToThrowForce;
+
 
     // Runs method that takes in player input. Also, checks if player character is on the ground or not.
     private void Update()
@@ -106,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
         jumpingInput = jumpingInput || Input.GetKey(jumpKey);
         restartInput = Input.GetKey(restartKey);
+        walkInput = Input.GetKey(walkKey);
     }
 
     // Moves player based on orientation and inputs
@@ -114,8 +128,14 @@ public class PlayerMovement : MonoBehaviour
         // Calculate movement direction
         moveDirection = orientationAndGroundCheck.forward * verticalInput + orientationAndGroundCheck.right * horizontalInput;
         // on ground        
-        if (grounded)
+        if (grounded && walkInput == false)
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
+        else if (grounded && walkInput == true)
+        {
+            rb.AddForce(moveDirection.normalized * walkSpeed * 10f, ForceMode.Force);
+        }
         else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
@@ -126,7 +146,6 @@ public class PlayerMovement : MonoBehaviour
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
 
         if (flatVel.magnitude > moveSpeed)
         {
@@ -158,5 +177,23 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    /// <summary>
+    /// Detects objects that the player collides with.
+    /// </summary>
+    /// <param name="other"> A collider that checks what the player picks up </param>
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("jumpBuff"))
+        {
+            jumpForce += jumpForceIncrAmount;
+            other.gameObject.SetActive(false);
+        }
+        else if (other.gameObject.CompareTag("throwBuff"))
+        {
+            accessToThrowForce.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
+            other.gameObject.SetActive(false);
+        }
     }
 }
