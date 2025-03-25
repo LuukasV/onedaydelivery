@@ -23,7 +23,8 @@ public class BreakableWindow : MonoBehaviour
 
         if (breakSound != null)
         {
-            AudioSource.PlayClipAtPoint(breakSound, transform.position);
+            float volume = 0.5f;
+            AudioSource.PlayClipAtPoint(breakSound, transform.position, volume);
         }
     }
 }

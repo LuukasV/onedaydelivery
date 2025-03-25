@@ -13,6 +13,9 @@ public class GotMailDetector : MonoBehaviour
     public CompassIcon myIcon;
     private CompassManager uiCompassManager;
 
+    [SerializeField] private Transform playerObjectHandler;
+    private Transform temp;
+
     //At start the script finds the UImanager script, so it can be updated when Mail is succesfully mailed
     private void Start()
     {
@@ -35,6 +38,9 @@ public class GotMailDetector : MonoBehaviour
         {
             //Added a point to UI-element
             audioSource.Play();
+
+            temp = playerObjectHandler.transform.Find("PlayerObj_Capsule");
+            temp.GetComponent<PlayerPickUpDrop>().objectHandlerNuller();
 
             //Get the anchor's coordinates
             float xcordinate = whereToTeleport.transform.position.x;

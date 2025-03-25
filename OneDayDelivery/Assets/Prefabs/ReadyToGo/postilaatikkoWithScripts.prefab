@@ -339,7 +339,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 855719322062862793}
   whereToTeleport: {fileID: 515340313182767869}
-  uiPointScorer: {fileID: 0}
+  id: 0
+  myIcon: {fileID: 0}
+  playerObjectHandler: {fileID: 0}
 --- !u!1 &515340313182767869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,7 +1031,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

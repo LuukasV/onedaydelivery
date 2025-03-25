@@ -39,6 +39,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     void Start()
     {
+
         speedChanger = playerParentBody.GetComponent<PlayerMovement>();
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
@@ -47,8 +48,16 @@ public class PlayerPickUpDrop : MonoBehaviour
         uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
+
+    public void objectHandlerNuller()
+    {
+        objectGrabbable = null;
+    }
+
     private void Update()
     {
+        Debug.Log("WITHIN UPDATE: " + objectGrabbable);
+
         // Grab or drop object. Depending if player is holding something.
         if (Input.GetKeyDown(pickUp))
         {
