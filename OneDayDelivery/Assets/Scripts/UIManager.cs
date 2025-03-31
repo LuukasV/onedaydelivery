@@ -27,6 +27,12 @@ public class UIManager : MonoBehaviour
     private Text backpackScore;
     private int boxesInBackpack;
 
+    //This runs earned postmarks (named stars for simplicity)
+    //private bool star1;
+    //private bool star2;
+    public float secondaryTimeAchievementInSeconds;
+    private bool star4;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,6 +49,7 @@ public class UIManager : MonoBehaviour
 
         timerActive = true;
         negatiivinen = false;
+
     }
 
     //Every update, the timer goes down (and updates)
@@ -76,7 +83,7 @@ public class UIManager : MonoBehaviour
     public void AddPoint()
     {
         boxesMailedScore++;
-        scoreText.text = "Packets Delievered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
+        scoreText.text = "Packages Delivered: " + boxesMailedScore.ToString() + "/" + maxBoxes.ToString();
         
         if(boxesMailedScore >= maxBoxes)
         {
@@ -111,6 +118,12 @@ public class UIManager : MonoBehaviour
     {
         escapeText.text = "Well done :D";
         timerActive = false;
+
+        //If we have achieved any goals, they are saved to GameData
+        GameData.level1_star1 = true;   //If we have activated EscapeZone, we have delivered all packages
+        if (!negatiivinen) GameData.level1_star2 = true;
+        if (secondsInTimer >= secondaryTimeAchievementInSeconds) GameData.level1_star3 = true;
+        if (star4) GameData.level1_star4 = true;
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
