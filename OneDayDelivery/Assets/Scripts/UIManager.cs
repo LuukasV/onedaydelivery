@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text backpackScore;
     private int boxesInBackpack;
+    private float originalTime;
 
     //This runs earned postmarks (named stars for simplicity)
     //private bool star1;
@@ -33,9 +34,21 @@ public class UIManager : MonoBehaviour
     public float secondaryTimeAchievementInSeconds;
     private bool star4;
 
+    public GameObject level1_star1;
+    public GameObject level1_star2;
+    public GameObject level1_star3;
+    public GameObject level1_star4;
+    public GameObject levelCompletedCanvas;
+    [SerializeField]
+    private Text yourTime;
+    [SerializeField]
+    private Text bestTime;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        originalTime = secondsInTimer;
         //The Cursor is made invisible to guarantee the working of certain menu elements
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -113,11 +126,16 @@ public class UIManager : MonoBehaviour
         escapeZone.SetActive(true);
     }
 
-    //End the level, initiates scoring, and returns the player to Main Menu
+    //Brings up end level screen, initiates scoring and sets earned stars visible in the end level screen
     public void EndLevel()
     {
         escapeText.text = "Well done :D";
         timerActive = false;
+
+        //Also button makes the cursor visible
+        UnityEngine.Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
 
         //If we have achieved any goals, they are saved to GameData
         GameData.level1_star1 = true;   //If we have activated EscapeZone, we have delivered all packages
@@ -125,7 +143,29 @@ public class UIManager : MonoBehaviour
         if (secondsInTimer >= secondaryTimeAchievementInSeconds) GameData.level1_star3 = true;
         if (star4) GameData.level1_star4 = true;
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        //We check if any of the level's stars are achieved from GameData/Just now
+        if (GameData.level1_star1) level1_star1.SetActive(true);
+        if (GameData.level1_star2) level1_star2.SetActive(true);
+        if (GameData.level1_star3) level1_star3.SetActive(true);
+        if (GameData.level1_star4) level1_star4.SetActive(true);
+
+        //We set current and best time in the end level canvas
+        float spentSeconds = originalTime - secondsInTimer;
+        TimeSpan timer = TimeSpan.FromSeconds(spentSeconds);
+        string timerInFormat = timer.ToString(@"hh\:mm\:ss\:f");
+        yourTime.text = "Your time: " + timerInFormat;
+        if(spentSeconds < GameData.level1_bestTime)
+        {
+            GameData.level1_bestTime = spentSeconds;
+            bestTime.text = "Best time: " + timerInFormat;
+        } else {
+            TimeSpan timerB = TimeSpan.FromSeconds(GameData.level1_bestTime);
+            string bestInFormat = timerB.ToString(@"hh\:mm\:ss\:f");
+            bestTime.text = "Best time: " + bestInFormat;
+        }
+
+        //We activate End Level screen
+        levelCompletedCanvas.SetActive(true);
     }
 
     //Goes back to main menu
@@ -133,6 +173,13 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Quit button has been pressed");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    //Restarts the current level
+    public void Restart()
+    {
+        Debug.Log("Restart button has been pressed");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
     //Deactivates Quit menu and resumes game/timer

@@ -12,5 +12,7 @@ public static class GameData
 
     public static int money;
 
+    public static float level1_bestTime = 2147483647; //Default is so ludicrously high, it must be replaced
+
     //Here we can also indicate which tools have been purchased from the shop
 }
