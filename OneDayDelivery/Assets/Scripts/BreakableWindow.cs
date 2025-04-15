@@ -18,7 +18,7 @@ public class BreakableWindow : MonoBehaviour
         Vector3 spawnPosition = transform.position;
         spawnPosition.y += brokenWindow.transform.localScale.y - 2.5f;
 
-        Instantiate(brokenWindow, spawnPosition, transform.rotation);
+        GameObject broken = Instantiate(brokenWindow, spawnPosition, transform.rotation);
         Destroy(gameObject);
 
         if (breakSound != null)
@@ -26,5 +26,7 @@ public class BreakableWindow : MonoBehaviour
             float volume = 0.5f;
             AudioSource.PlayClipAtPoint(breakSound, transform.position, volume);
         }
+
+        Destroy(broken, 10f);
     }
 }
