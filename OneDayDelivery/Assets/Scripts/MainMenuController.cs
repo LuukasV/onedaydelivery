@@ -23,6 +23,10 @@ public class MainMenuController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
+        //We Load the Saved GameData (the Data has been Saved when moving between levels)
+        Debug.Log("Main Menu activated; the Game has been LOADED");
+        LoadSystem.LoadGameData();
+
         //We check if any of the level's stars are achieved from GameData
         if(GameData.level1_star1) level1_star1.SetActive(true);
         if(GameData.level1_star2) level1_star2.SetActive(true);
@@ -68,5 +72,12 @@ public class MainMenuController : MonoBehaviour
         Debug.Log("Level 2 button has been pressed");
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+    }
+
+    //Saves the game, if player closes the game/application
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Player has quit the game; the Game has been SAVED");
+        SaveSystem.SaveGameState();
     }
 }

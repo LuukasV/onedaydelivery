@@ -164,6 +164,10 @@ public class UIManager : MonoBehaviour
             bestTime.text = "Best time: " + bestInFormat;
         }
 
+        //We save the GameData
+        Debug.Log("Player has completed the level; the Game has been SAVED");
+        SaveSystem.SaveGameState();
+
         //We activate End Level screen
         levelCompletedCanvas.SetActive(true);
     }
@@ -208,4 +212,5 @@ public class UIManager : MonoBehaviour
         boxesInBackpack--;
         backpackScore.text = boxesInBackpack.ToString();
     }
+
 }
