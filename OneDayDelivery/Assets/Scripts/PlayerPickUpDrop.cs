@@ -29,6 +29,8 @@ public class PlayerPickUpDrop : MonoBehaviour
     [SerializeField] private int sizeOfInventory;
     [SerializeField] private int speedChangeOfInventory;
     [SerializeField] private float throwForce;
+    [SerializeField] private float pickUpDistance;
+
 
     [Header("Keybinds")]
     public KeyCode throwKey = KeyCode.F;
@@ -43,6 +45,7 @@ public class PlayerPickUpDrop : MonoBehaviour
         speedChanger = playerParentBody.GetComponent<PlayerMovement>();
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
+        pickUpDistance = 4f;
 
         //UIManager script is linked with the PlayerUI component
         uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
@@ -56,7 +59,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("WITHIN UPDATE: " + objectGrabbable);
+        //Debug.Log("WITHIN UPDATE: " + objectGrabbable);
 
         // Grab or drop object. Depending if player is holding something.
         if (Input.GetKeyDown(pickUp))
@@ -64,7 +67,7 @@ public class PlayerPickUpDrop : MonoBehaviour
             if (objectGrabbable == null)
             {
                 // Not carrying an object, try to grab.
-                float pickUpDistance = 4f;
+                //float pickUpDistance = 4f;
                 if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
                 {
                     //Debug.Log("Raycast hit: " + raycastHit.transform.name);
@@ -102,21 +105,63 @@ public class PlayerPickUpDrop : MonoBehaviour
             objectGrabbable = null;
         }
 
-        // Put it in inventory
-        else if (Input.GetKeyDown(intoPocket) && objectGrabbable != null)
+        //Put it in inventory
+        //else if (Input.GetKeyDown(intoPocket) && objectGrabbable != null)
+        //{
+        //    //Alterantive method for inventory system? 
+        //    if (indexInventory < sizeOfInventory)
+        //        {
+        //            inventory[indexInventory] = objectGrabbable;
+        //            objectGrabbable.gameObject.SetActive(false);
+        //            indexInventory++;
+        //            speedChanger.moveSpeed -= speedChangeOfInventory;
+        //            objectGrabbable = null;
+
+        //            uiManager.AddPointToBackpackScore();
+        //        }
+        //}
+
+        else if (Input.GetKeyDown(intoPocket) && indexInventory < sizeOfInventory)
         {
-            // Alterantive method for inventory system? 
-            if (indexInventory < sizeOfInventory)
+
+            if(objectGrabbable!= null)
             {
                 inventory[indexInventory] = objectGrabbable;
                 objectGrabbable.gameObject.SetActive(false);
                 indexInventory++;
                 speedChanger.moveSpeed -= speedChangeOfInventory;
                 objectGrabbable = null;
-
                 uiManager.AddPointToBackpackScore();
             }
+
+            else if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
+            {
+
+                if (raycastHit.collider.transform.CompareTag("pickupCollider"))
+                {
+                    parentTransform = raycastHit.collider.transform.parent;
+                    objectGrabbable = parentTransform.GetComponent<ObjectGrabbable>();
+                    inventory[indexInventory] = objectGrabbable;
+                    objectGrabbable.gameObject.SetActive(false);
+                    indexInventory++;
+                    speedChanger.moveSpeed -= speedChangeOfInventory;
+                    uiManager.AddPointToBackpackScore();
+                    objectGrabbable = null;
+            }
+
+                // Alterantive method for inventory system? 
+                //if (indexInventory < sizeOfInventory)
+                //{
+                //    inventory[indexInventory] = objectGrabbable;
+                //    objectGrabbable.gameObject.SetActive(false);
+                //    indexInventory++;
+                //    speedChanger.moveSpeed -= speedChangeOfInventory;
+                //    uiManager.AddPointToBackpackScore();
+                //    objectGrabbable = null;
+                //}
+            }
         }
+
 
         // Get packages out of inventory
         // Alternative method for key input: (Input.GetKeyDown(KeyCode.Y)
