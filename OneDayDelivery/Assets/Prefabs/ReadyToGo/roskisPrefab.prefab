@@ -42,8 +42,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 79b0f5afa09856149abaf73d0f65144a, type: 3}
-  m_Resource: {fileID: 8300000, guid: 79b0f5afa09856149abaf73d0f65144a, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -213,10 +213,10 @@ PrefabInstance:
       addedObject: {fileID: 3044642622406144403}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5782950087021842408}
+      addedObject: {fileID: 4274338054681393161}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4274338054681393161}
+      addedObject: {fileID: 4818603780419362593}
   m_SourcePrefab: {fileID: 100100000, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
 --- !u!4 &8485694464989622471 stripped
 Transform:
@@ -250,22 +250,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5211943252368054919, guid: 912b324bf7c8f774bbb857ddff4f673b, type: 3}
---- !u!114 &5782950087021842408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117799699410332285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9414c731774217243ae27299aba83e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 9117799699410332285}
-  target: {fileID: 0}
-  audioSource: {fileID: 8623530661983668662}
-  action: 0
 --- !u!54 &4274338054681393161
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -293,3 +277,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4818603780419362593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117799699410332285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3535ee6e2b2cd3a47ab8fee96b9f0161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 8623530661983668662}
+  audioClips:
+  - {fileID: 8300000, guid: 79b0f5afa09856149abaf73d0f65144a, type: 3}

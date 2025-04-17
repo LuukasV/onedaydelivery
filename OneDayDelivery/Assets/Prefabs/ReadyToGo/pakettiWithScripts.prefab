@@ -42,8 +42,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 84f70df59a5d1df4fa12b2c4728093e3, type: 3}
-  m_Resource: {fileID: 8300000, guid: 84f70df59a5d1df4fa12b2c4728093e3, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.305
   m_Pitch: 1
@@ -276,7 +276,7 @@ PrefabInstance:
       addedObject: {fileID: 1808814749420404230}
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: d857984d133f76f4e97c7cbbdc78c6b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8700293749506737972}
+      addedObject: {fileID: 1560372302136215687}
   m_SourcePrefab: {fileID: 100100000, guid: d857984d133f76f4e97c7cbbdc78c6b8, type: 3}
 --- !u!4 &6796560313383719235 stripped
 Transform:
@@ -374,7 +374,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.004589571, y: 0.003177951, z: 0.0029406236}
   m_Center: {x: 2.506168e-24, y: 7.358141e-17, z: 0.0014793801}
---- !u!114 &8700293749506737972
+--- !u!114 &1560372302136215687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,13 +383,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7360368309654740905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9414c731774217243ae27299aba83e6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3535ee6e2b2cd3a47ab8fee96b9f0161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 7360368309654740905}
-  target: {fileID: 0}
   audioSource: {fileID: 2613886228889510308}
-  action: 0
+  audioClips:
+  - {fileID: 8300000, guid: 84f70df59a5d1df4fa12b2c4728093e3, type: 3}
 --- !u!4 &7648129260262787622 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d857984d133f76f4e97c7cbbdc78c6b8, type: 3}
