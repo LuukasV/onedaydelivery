@@ -20,6 +20,8 @@ public static class GameData
 }
 
 //Controls the Saving of GameData, takes all savable data from GameData
+//On command, loads/writes the (possible) saved data from a file to GameData
+//On command, cleares saved data from a file
 public static class SaveSystem
 {
     public const string FILENAME_SAVEDATA = "/savedata.txt";
@@ -40,17 +42,13 @@ public static class SaveSystem
         //string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(filePathSaveData, saveData);
     }
-}
 
-//On command, loads/writes the (possible) saved data from a json file to GameData
-public static class LoadSystem
-{
     //We try to load GameData from saved file
     public static void LoadGameData()
     {
         try
         {
-            string filePath = Application.persistentDataPath + SaveSystem.FILENAME_SAVEDATA;
+            string filePath = Application.persistentDataPath + FILENAME_SAVEDATA;
             string fileContent = File.ReadAllText(filePath);
             string[] strLines = fileContent.Split(System.Environment.NewLine);
 
@@ -62,9 +60,26 @@ public static class LoadSystem
 
             GameData.level1_bestTime = float.Parse(strLines[4]);
 
-        } catch
+        }
+        catch   //If the save file is empty, we will change GameData to starting defaults (in the case of willfull reset)
         {
             Debug.Log("No Saved Data/File found");
+
+            GameData.level1_star1 = false;
+            GameData.level1_star2 = false;
+            GameData.level1_star3 = false;
+            GameData.level1_star4 = false;
+
+            GameData.level1_bestTime = 2147483647;
         }
+    }
+
+    //Cleares saved data from saved file
+    public static void ClearData()
+    {
+        string filePathSaveData = Application.persistentDataPath + FILENAME_SAVEDATA;
+        string saveData = "";
+
+        File.WriteAllText(filePathSaveData, saveData);  //We overwrite the save file with an empty string
     }
 }

@@ -12,6 +12,8 @@ public class CompassManager : MonoBehaviour
     public RawImage compassImage;
     public Transform player;
 
+    public float maxMarkerDistance = 200f;
+
     float compassUnit;
 
     private void Start()
@@ -39,6 +41,14 @@ public class CompassManager : MonoBehaviour
         foreach(CompassIcon icon in compassIcons)
         {
             icon.image.rectTransform.anchoredPosition = GetPosOnCompass(icon);
+
+            float distance = Vector2.Distance(new Vector2(player.transform.position.x, player.transform.position.z), icon.position);
+            float scale = 0f;
+
+            //We hide all icons that are too far away (scale stays at 0 if we are too far)
+            if(distance < maxMarkerDistance) scale = 1f - (distance / maxMarkerDistance);
+
+            icon.image.rectTransform.localScale = Vector3.one * scale;
         }
     }
 

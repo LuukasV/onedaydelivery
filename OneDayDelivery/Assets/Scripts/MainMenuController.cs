@@ -25,7 +25,7 @@ public class MainMenuController : MonoBehaviour
 
         //We Load the Saved GameData (the Data has been Saved when moving between levels)
         Debug.Log("Main Menu activated; the Game has been LOADED");
-        LoadSystem.LoadGameData();
+        SaveSystem.LoadGameData();
 
         //We check if any of the level's stars are achieved from GameData
         if(GameData.level1_star1) level1_star1.SetActive(true);
@@ -72,6 +72,16 @@ public class MainMenuController : MonoBehaviour
         Debug.Log("Level 2 button has been pressed");
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+    }
+
+    //Orders the saved data to be cleared and loads the main menu again (with empty savegame)
+    public void ClearDataButton()
+    {
+        Debug.Log("Clear memory pressed");
+
+        SaveSystem.ClearData();
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     //Saves the game, if player closes the game/application
