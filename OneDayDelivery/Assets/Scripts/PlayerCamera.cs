@@ -8,9 +8,10 @@ public class PlayerCamera : MonoBehaviour
     public float MouseY;
     public float Angle;
 
-    // Sets sensitivity to player input from mouse.
-    public float sensX;
-    public float sensY;
+    // Sets mouse sensitivity to chosen Settings (stored in Player prefrences)
+    //public float sensX;
+    //public float sensY;
+    private float mouseSens;
 
     [SerializeField] public int minValueAngle;
     [SerializeField] public int posValueAngle;
@@ -25,15 +26,16 @@ public class PlayerCamera : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        mouseSens = PlayerPrefs.GetFloat("CurrentMouseSensitivity", 200); //Mouse sensitivity defaults to 200 (stored in Player preferences)
     }
 
     // Rotates player based on mouse input.
     void Update()
     {
-        MouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
+        MouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
         Body.Rotate(Vector3.up, MouseX);
 
-        MouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
+        MouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
         Angle -= MouseY;
         Angle = Mathf.Clamp(Angle, minValueAngle, posValueAngle);
         Head.localRotation = Quaternion.Euler(Angle, 0, 0);
