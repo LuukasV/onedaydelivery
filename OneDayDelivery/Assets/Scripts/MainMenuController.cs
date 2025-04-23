@@ -17,6 +17,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField]
     private Text bestTime;
 
+    public Slider mouseSensSlider;
+
     //The Main Menu puts the cursor visible (if it is not already)
     public void Start()
     {
@@ -39,6 +41,9 @@ public class MainMenuController : MonoBehaviour
             string bestInFormat = timerB.ToString(@"hh\:mm\:ss\:f");
             bestTime.text = "Best time: " + bestInFormat;
         }
+        float mouseSens = PlayerPrefs.GetFloat("CurrentMouseSensitivity", 200); //Mouse sensitivity defaults to 200
+        //We set the Mouse settings slider to current values
+        mouseSensSlider.value = mouseSens/10;
     }
 
     //If Esc-button is pressed, we activate the pop-up canvas, which (hopefully) has the "Are you sure you want to Quit?" functionality
@@ -89,5 +94,12 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("Player has quit the game; the Game has been SAVED");
         SaveSystem.SaveGameState();
+    }
+
+    //Sets a new mouse sensitivity to Player preferences
+    public void adjustSensitivity()
+    {
+        PlayerPrefs.SetFloat("CurrentMouseSensitivity", mouseSensSlider.value * 10);
+        Debug.Log("New Mouse sensitivity is now: " + mouseSensSlider.value * 10);
     }
 }
