@@ -1,10 +1,13 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Player movement script that allows the player to control a character. Adds mobility to character.
-// If movement is jittery. Test interpolate = None and collision detection = Discrete changes.
+/// <summary>
+/// Player movement script that allows the player to control a character. Adds mobility to character.
+/// If movement is jittery. Test interpolate = None and collision detection = Discrete changes.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -25,7 +28,11 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
     public float groundDistance = 0.4f;
-    public float FallMultiplier;
+
+    // TESTÌNG NEW JUMP
+    // Tester for gravitifier timer. DELETE WHEN NOT NECESSARY.
+    //public float waitTimeForCounterGrav;
+    public float counterGravStr;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -56,13 +63,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform accessToThrowForce;
 
 
-    // Runs method that takes in player input. Also, checks if player character is on the ground or not.
+    /// <summary>
+    /// Runs method that takes in player input. Also, checks if player character is on the ground or not.
+    /// </summary>
     private void Update()
     {
         grounded = Physics.CheckSphere(orientationAndGroundCheck.position, groundDistance, whatIsGround);
 
         MyInput();
-        //ORIGINAL SPEED CONTROL PLACEMENT
         SpeedControl();
 
         if (restartInput)
@@ -76,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // ORIGINAL
             rb.linearDamping = airDrag;
         }
     }
@@ -85,34 +92,52 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
 
-        // Player jumps MAYBE REMOVE THIS TESTING IN FIXED UPDATE INSTEAD OF UDATE.
+        // Player jumps
         if (jumpingInput && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
-        //remove and test?
+
+            // Test for timed antigravity outside of fixed update time stamp. DELETE WHEN NOT NECESSARY.
+            //StartCoroutine (Gravitifier());
+
             Invoke(nameof(ResetJump), jumpCooldown);
         }
         jumpingInput = false;
         //Debug.Log(rb.linearVelocity.x);
         //Debug.Log(rb.linearVelocity.magnitude);
+        //Debug.Log(rb.linearVelocity.y);
 
-        if (rb.linearVelocity.y < 0)
+        if (!grounded)
         {
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * FallMultiplier * Time.deltaTime;
+            ApplyCounterGravity();
         }
 
     }
 
-    // Sets variables needed for player movement and rotation.
+    /// <summary>
+    /// Antigravity method to make the player character fall faster when !grounded.
+    /// </summary>
+    private void ApplyCounterGravity()
+    {
+        // Apply counter gravity to simulate more natural fall or counter gravity effect
+        rb.AddForce(-transform.up * counterGravStr * Time.fixedDeltaTime, ForceMode.Force);
+    }
+
+    /// <summary>
+    /// Sets variables needed for player movement and rotation.
+    /// </summary>
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
         ResetJump();
     }
 
-    // Takes in player input for jumps and body movement.
+    /// <summary>
+    /// Takes in player input for jumps and body movement.
+    /// </summary>
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -122,12 +147,14 @@ public class PlayerMovement : MonoBehaviour
         walkInput = Input.GetKey(walkKey);
     }
 
-    // Moves player based on orientation and inputs
+    /// <summary>
+    /// Moves player based on orientation and inputs
+    /// </summary>
     private void MovePlayer()
     {
         // Calculate movement direction
         moveDirection = orientationAndGroundCheck.forward * verticalInput + orientationAndGroundCheck.right * horizontalInput;
-        // on ground        
+        // on ground
         if (grounded && walkInput == false)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
@@ -140,9 +167,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
-    }    
+    }
 
-    // Controls characters speed. Makes sure it doesn't go faster than set speed.
+    /// <summary>
+    /// Controls characters speed. Makes sure it doesn't go faster than set speed.
+    /// </summary>
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -166,14 +195,36 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Jump mechanics for player's character.
+    /// <summary>
+    /// Jump mechanics for player's character.
+    /// </summary>
     private void Jump()
     {
-        //reset y velocity ?
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
-    // Jumping cooldown.
+
+    // TESTABLE METHOD FOR TIMED ANTIGRAVITY
+    //private IEnumerator Gravitifier()
+    //{
+    //    yield return new WaitForSeconds(waitTimeForCounterGrav);
+
+    //    //while (!grounded)
+    //    //{
+    //    //    rb.AddForce(-transform.up * counterGravStr, ForceMode.Force); // Apply constant downward force
+    //    //    yield return new WaitForSeconds(0.05f); // Adjust frequency of force application
+    //    //}
+
+    //    while (!grounded)
+    //    {
+    //        rb.AddForce(-transform.up * counterGravStr * Time.fixedDeltaTime, ForceMode.Force);
+    //        yield return new WaitForFixedUpdate();
+    //    }
+    //}
+
+    /// <summary>
+    /// Method that resets player jump cooldown to make the character ready to jump.
+    /// </summary>
     private void ResetJump()
     {
         readyToJump = true;
