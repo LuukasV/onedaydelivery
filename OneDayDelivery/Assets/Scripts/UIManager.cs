@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     //private bool star1;
     //private bool star2;
     public float secondaryTimeAchievementInSeconds;
-    private bool star4;
+    private bool star4 = false;
 
     public GameObject level1_star1;
     public GameObject level1_star2;
@@ -211,6 +211,12 @@ public class UIManager : MonoBehaviour
     {
         boxesInBackpack--;
         backpackScore.text = boxesInBackpack.ToString();
+    }
+
+    //Sets the forth star as uclocked
+    public void ScoreGoal()
+    {
+        star4 = true;
     }
 
 }
