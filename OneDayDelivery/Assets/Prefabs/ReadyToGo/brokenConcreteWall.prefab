@@ -905,7 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a053024a762355444a8bd037ea29f871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakSound: {fileID: 8300000, guid: ce054341162c59547838e97e632e9582, type: 3}
+  breakSound: {fileID: 8300000, guid: 349e75bc11bc32840bb9ae5aabbe6266, type: 3}
 --- !u!1 &1804865747889322398 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 33840760279270478, guid: 074e9d78bdadc874eaa34f405b8c234e, type: 3}
