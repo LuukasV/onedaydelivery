@@ -45,7 +45,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.305
+  m_Volume: 0.802
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -54,7 +54,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 40
+  MaxDistance: 80
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -388,7 +388,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2613886228889510308}
   audioClips:
-  - {fileID: 8300000, guid: 84f70df59a5d1df4fa12b2c4728093e3, type: 3}
+  - {fileID: 8300000, guid: 999ceb5636ec06c47b17a85d929969e6, type: 3}
+  - {fileID: 8300000, guid: be056b8c83b2fab4590bd8d006854f24, type: 3}
+  - {fileID: 8300000, guid: acd133af43de09542859915e4bf88536, type: 3}
+  - {fileID: 8300000, guid: 5515045bb0327614fa996d32ea7c2746, type: 3}
 --- !u!4 &7648129260262787622 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d857984d133f76f4e97c7cbbdc78c6b8, type: 3}
