@@ -6287,6 +6287,30 @@ PrefabInstance:
       propertyPath: m_text
       value: Are you sure you want to Quit the game?
       objectReference: {fileID: 0}
+    - target: {fileID: 3055157277642546740, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055157277642546740, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c4a159fc527338845979c5212bfa1b92, type: 2}
+    - target: {fileID: 3055157277642546740, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055157277642546740, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055157277642546740, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9127435523962716932, guid: c4a159fc527338845979c5212bfa1b92, type: 2}
+    - target: {fileID: 3055157277642546740, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3785335932844723360, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
@@ -6309,6 +6333,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4027837213808280183, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4198256418607921971, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c4a159fc527338845979c5212bfa1b92, type: 2}
+    - target: {fileID: 4198256418607921971, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4198256418607921971, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9127435523962716932, guid: c4a159fc527338845979c5212bfa1b92, type: 2}
+    - target: {fileID: 4198256418607921971, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7333787301509301143, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
@@ -6402,6 +6442,18 @@ PrefabInstance:
     - target: {fileID: 8777571693482908749, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MainMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8910672693597041322, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c4a159fc527338845979c5212bfa1b92, type: 2}
+    - target: {fileID: 8910672693597041322, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8910672693597041322, guid: 606f9b83f0fa6cd4b93e2a26b25b046e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
