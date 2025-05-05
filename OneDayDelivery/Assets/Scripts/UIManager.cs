@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Text backpackScore;
+    [SerializeField]
+    private Text backpackMaximum;
     private int boxesInBackpack;
     private float originalTime;
 
@@ -217,6 +219,12 @@ public class UIManager : MonoBehaviour
     public void ScoreGoal()
     {
         star4 = true;
+    }
+
+    //Changes the visual of maximum packets of player's inventory in HUD
+    public void ChangeMaximum(int newMax)
+    {
+        backpackMaximum.text = "/" + newMax.ToString();
     }
 
 }
