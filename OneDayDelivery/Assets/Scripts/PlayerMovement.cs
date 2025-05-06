@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     bool readyToJump;
     public float groundDistance = 0.4f;
 
-    // TESTÌNG NEW JUMP
+    // TESTï¿½NG NEW JUMP
     // Tester for gravitifier timer. DELETE WHEN NOT NECESSARY.
     //public float waitTimeForCounterGrav;
     public float counterGravStr;
@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     bool jumpingInput;
     bool restartInput;
     bool walkInput;
+    
 
     [Header("Changable values for play testing")]
     [SerializeField] private float throwForceIncrAmount;
@@ -54,13 +55,16 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     // Variables for character physics.
-    // serialize field here rpivate
+    // serialize field here private
     public Transform orientationAndGroundCheck;
     Rigidbody rb;
 
     [Header("Variable change access")]
     // how does this work in practice? What variable type. with player pickup drop type.
     [SerializeField] private Transform accessToThrowForce;
+
+    [Header("Variable for disabling moving")]
+    public bool canMove = true; // Boolean for disabling movement
 
 
     /// <summary>
@@ -70,8 +74,11 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = Physics.CheckSphere(orientationAndGroundCheck.position, groundDistance, whatIsGround);
 
-        MyInput();
-        SpeedControl();
+        if (canMove)
+        {
+            MyInput();
+            SpeedControl();
+        }
 
         if (restartInput)
         {
@@ -90,7 +97,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (canMove)
+        {
+            MovePlayer();
+        }
 
         // Player jumps
         if (jumpingInput && readyToJump && grounded)
