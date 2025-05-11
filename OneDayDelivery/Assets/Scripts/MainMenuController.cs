@@ -41,7 +41,7 @@ public class MainMenuController : MonoBehaviour
             string bestInFormat = timerB.ToString(@"hh\:mm\:ss\:f");
             bestTime.text = "Best time: " + bestInFormat;
         }
-        float mouseSens = PlayerPrefs.GetFloat("CurrentMouseSensitivity", 200); //Mouse sensitivity defaults to 200
+        float mouseSens = PlayerPrefs.GetFloat("CurrentMouseSensitivity", 100); //Mouse sensitivity defaults to 200
         //We set the Mouse settings slider to current values
         mouseSensSlider.value = mouseSens/10;
     }
