@@ -143,6 +143,12 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         ResetJump();
+
+        //We determine, if any upgrades are in effect
+        if (GameData.item2Active)
+        {
+            ActivateJumpBuff();
+        }
     }
 
     /// <summary>
@@ -256,5 +262,19 @@ public class PlayerMovement : MonoBehaviour
             accessToThrowForce.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
             other.gameObject.SetActive(false);
         }
+    }
+
+    //Activates Throw Buff
+    private void ActivateThrowBuff()
+    {
+        accessToThrowForce.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
+        Debug.Log("Player has a throwbuff activated");
+    }
+
+    //Activates Jump Buff
+    private void ActivateJumpBuff()
+    {
+        jumpForce += jumpForceIncrAmount;
+        Debug.Log("Player has a jumpbuff activated");
     }
 }
