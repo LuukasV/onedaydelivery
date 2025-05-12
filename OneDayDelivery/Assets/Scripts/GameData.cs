@@ -7,16 +7,21 @@ using System.IO;
 //As a default the GameData updates itself from SavedData
 public static class GameData
 {
-    public static bool level1_star1;
-    public static bool level1_star2;
-    public static bool level1_star3;
-    public static bool level1_star4;
+    public static bool level1_star1 = false;
+    public static bool level1_star2 = false;
+    public static bool level1_star3 = false;
+    public static bool level1_star4 = false;
 
     //public static int money;
 
     public static float level1_bestTime = 2147483647; //Default is so ludicrously high, it must be replaced
 
     //Here we can also indicate which tools have been purchased from the shop
+    public static bool item1Active = false;
+    public static bool item2Active = false;
+
+    public static int starsEarned = 0;
+    public static int starsSpent = 0;
 }
 
 //Controls the Saving of GameData, takes all savable data from GameData
@@ -39,6 +44,11 @@ public static class SaveSystem
 
         saveData += GameData.level1_bestTime + System.Environment.NewLine;
 
+        saveData += GameData.item1Active.ToString() + System.Environment.NewLine;
+        saveData += GameData.item2Active.ToString() + System.Environment.NewLine;
+        saveData += GameData.starsEarned + System.Environment.NewLine;
+        saveData += GameData.starsSpent + System.Environment.NewLine;
+
         //string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(filePathSaveData, saveData);
     }
@@ -60,6 +70,18 @@ public static class SaveSystem
 
             GameData.level1_bestTime = float.Parse(strLines[4]);
 
+            GameData.item1Active = bool.Parse(strLines[5]);
+            GameData.item2Active = bool.Parse(strLines[6]);
+            GameData.starsEarned = int.Parse(strLines[7]);
+            GameData.starsSpent = int.Parse(strLines[8]);
+
+            //We calculate the amount of earned postmarks (here to allow compatibility with earlier game versions)
+            GameData.starsEarned = 0;
+            if (GameData.level1_star1) GameData.starsEarned++;
+            if (GameData.level1_star2) GameData.starsEarned++;
+            if (GameData.level1_star3) GameData.starsEarned++;
+            if (GameData.level1_star4) GameData.starsEarned++;
+
         }
         catch   //If the save file is empty, we will change GameData to starting defaults (in the case of willfull reset)
         {
@@ -69,6 +91,11 @@ public static class SaveSystem
             GameData.level1_star2 = false;
             GameData.level1_star3 = false;
             GameData.level1_star4 = false;
+
+            GameData.item1Active = false;
+            GameData.item2Active = false;
+            GameData.starsEarned = 0;
+            GameData.starsSpent = 0;
 
             GameData.level1_bestTime = 2147483647;
         }

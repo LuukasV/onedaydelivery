@@ -26,7 +26,7 @@ public class PlayerCamera : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        mouseSens = PlayerPrefs.GetFloat("CurrentMouseSensitivity", 200); //Mouse sensitivity defaults to 200 (stored in Player preferences)
+        mouseSens = PlayerPrefs.GetFloat("CurrentMouseSensitivity", 100); //Mouse sensitivity defaults to 200 (stored in Player preferences)
     }
 
     // Rotates player based on mouse input.
