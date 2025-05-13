@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 7103853724068390400}
   - component: {fileID: 4256822053943438186}
   - component: {fileID: 8082456058825424981}
-  - component: {fileID: 7914102199728548875}
   m_Layer: 0
   m_Name: Minefield
   m_TagString: Untagged
@@ -229,20 +228,9 @@ MonoBehaviour:
   throwForce: 100
   upForce: 50
   playerMovementScript: {fileID: 0}
---- !u!114 &7914102199728548875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7178226529949442473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3535ee6e2b2cd3a47ab8fee96b9f0161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 2495054871624219307}
+  audioSource: {fileID: 0}
   audioClips:
   - {fileID: 8300000, guid: 1c09b41bc18799d41bdcd31b973167af, type: 3}
   - {fileID: 8300000, guid: 1319becf3d4ac3f49b5e9afd38143fc6, type: 3}
   - {fileID: 8300000, guid: afabdc091af292f49b90349faa4bff4e, type: 3}
+  explotion: {fileID: 4004245575832586453, guid: 47370d70549b46e42bb6906eaf277b4d, type: 3}
