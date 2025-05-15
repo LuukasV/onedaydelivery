@@ -23,8 +23,16 @@ public class AI_DogSimple : MonoBehaviour
     [SerializeField] private float chaseSpeed;
     [SerializeField] private float startWaitTime;
     [SerializeField] private float currentWaitTime;
+    [SerializeField] private float dogPushPlayerStr;
+    [SerializeField] private float dogPushDisableMovementTime;
+
+
     public Transform dogGrabPoint;
     [SerializeField] private float dogThrowForce;
+    private bool hasStolenPackage = false;
+
+    private float lastSeenTime = Mathf.NegativeInfinity;
+    [SerializeField] private float playerMemoryDuration = 1.5f;
 
     private NavMeshAgent agent;
     [Header("Player detection and NPC movement")]
@@ -83,7 +91,7 @@ public class AI_DogSimple : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called once per frame.
+    /// Set variables needed for player interaction and NPC movement.
     /// </summary>
     private void Awake()
     {
@@ -92,12 +100,10 @@ public class AI_DogSimple : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called once per frame.
+    /// Runs dog vision and detection method and patrol and chase behaviours.
     /// </summary>
     void Update()
     {
-        // either i need to change how to get into envinromnetview or i change the enviroment view by creating a else if for the for loop. For loop notices player
-        // so else if it doenst see a player. If ican get an out of sight variable from enviroentavile. I could use that to set the chas or patrol.
         EnviromentView();
 
         if (m_IsPatrol)
@@ -112,7 +118,7 @@ public class AI_DogSimple : MonoBehaviour
     }
 
     /// <summary>
-    /// NPC starts chasing the player. Destination set as player location and new chase speed is set. If NPC loses sight of player, NPC will stop and wait.
+    /// NPC starts chasing the player. Destination set as player location and new chase speed is set. If NPC loses sight of player, NPC will stop and wait, and NPC variables are set to patrol state.
     /// </summary>
     private void getAfter()
     {
@@ -121,6 +127,7 @@ public class AI_DogSimple : MonoBehaviour
 
         agent.SetDestination(playerTransform.position);
 
+        //Debug logs from debugging purposes if necessary.
         //Debug.Log("DOG Agent destination: " + agent.destination);
         //Debug.Log("DOG Remaining distance: " + agent.remainingDistance);
 
@@ -149,14 +156,14 @@ public class AI_DogSimple : MonoBehaviour
         // if walkPointSet is false, search one and set it to true.
         if (!walkPointSet) SearchWalkPoint();
 
-        // if walkPointSet is true, go there.
+        // if walkPointSet is true, set it as destination and go there.
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
         }
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        //Walkpoint reached
+        // Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
         {
             walkPointSet = false;
@@ -179,48 +186,8 @@ public class AI_DogSimple : MonoBehaviour
     }
 
     /// <summary>
-    /// Npc sight and player detection.
+    /// NPC detection and sight method. If player is within set radius and angle, the NPC detects the player. 
     /// </summary>
-    //void EnviromentView()
-    //{
-    //    // if player is within a certain radius, information about it will be stored within players array.
-    //    Collider[] players = Physics.OverlapSphere(transform.position, viewRadius, whatIsPlayer);
-    //    foreach (Collider playerCollider in players)
-    //    {
-    //        Vector3 dirToPlayer = (playerCollider.transform.position - transform.position).normalized;
-    //        float angle = Vector3.Angle(transform.forward, dirToPlayer);
-
-    //        // if player is within a certain angle, he will be detected
-    //        if (angle < viewAngle / 2f)
-    //        {
-    //            //Debug.Log("I see within angle and radius");
-    //            float dstToPlayer = Vector3.Distance(transform.position, playerCollider.transform.position);
-
-    //            if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
-    //            {
-    //                m_PlayerInRange = true;
-    //                m_IsPatrol = false;
-    //            }
-    //            else
-    //            {
-    //                m_PlayerInRange = false;
-    //            }
-    //        }
-
-    //        // if player moves out of a certain radius or angle, npc will lose sight of player.
-    //        if ((Vector3.Distance(transform.position, playerCollider.transform.position) > viewRadius) || (Vector3.Angle(transform.forward, dirToPlayer) > viewAngle / 2))
-    //        {
-    //            //Debug.Log("lost sight");
-
-    //            m_PlayerInRange = false;
-    //        }
-    //        if (m_PlayerInRange)
-    //        {
-    //            m_PlayerPosition = playerCollider.transform.position;
-    //        }
-    //    }
-    //}
-
     void EnviromentView()
     {
         m_PlayerInRange = false;
@@ -238,6 +205,7 @@ public class AI_DogSimple : MonoBehaviour
             {
                 //Debug.Log("I see within angle and radius");
                 m_PlayerInRange = true;
+                lastSeenTime = Time.time;
                 m_IsPatrol = false;
                 m_PlayerPosition = playerCollider.transform.position;
                 break;
@@ -246,12 +214,58 @@ public class AI_DogSimple : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts coroutine if npc has grabbed a package from player.
+    /// Starts coroutine to throw a package if npc has grabbed a package from player. Pushes the player away from the NPC.
     /// </summary>
     /// <param name="stolenPackage"> A package that was stolen from the player </param>
     public void runAwayAndThrow(ObjectGrabbable stolenPackage)
     {
+        //if (!m_PlayerInRange || hasStolenPackage || stolenPackage == null)
+        //{
+        //    Debug.Log("Dog can't steal. In range: " + m_PlayerInRange + " | Already stole: " + hasStolenPackage);
+        //    return;
+        //}
+
+        //Debug.Log(m_PlayerInRange + " " + hasStolenPackage);
+        //if (!m_PlayerInRange || hasStolenPackage) return;
+        //hasStolenPackage = true;
+        if (!CanSteal() || stolenPackage == null) return;
+
+        hasStolenPackage = true; // 
         StartCoroutine(SmoothTurnAndThrow(stolenPackage));
+        PushPlayerAway();
+    }
+
+
+    /// <summary>
+    /// If player has a package, he is pushed away and his movement controls are disabled for a set time.
+    /// </summary>
+    private void PushPlayerAway()
+    {
+        // Check if the player has a Rigidbody component
+        Rigidbody playerRb = playerTransform.GetComponent<Rigidbody>();
+        PlayerMovement playerMovement = playerTransform.GetComponent<PlayerMovement>();
+
+        if (playerRb != null && playerMovement != null)
+        {
+            playerMovement.canMove = false;
+            StartCoroutine(EnableMovementAfterDelay(playerMovement, dogPushDisableMovementTime)); // 1 second delay
+
+            // Calculate direction to push player away (from dog to player)
+            Vector3 pushDirection = playerTransform.position - transform.position;
+            pushDirection.y = 0.75f; // Keep the push direction horizontal (ignoring vertical force)
+
+            // Apply a force to push the player away
+            playerRb.AddForce(pushDirection.normalized * dogPushPlayerStr, ForceMode.Impulse); // Adjust the "10f" to control the strength of the push
+        }
+    }
+
+    /// <summary>
+    /// Enables movement after a set delay.
+    /// </summary>
+    private IEnumerator EnableMovementAfterDelay(PlayerMovement playerMovement, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        playerMovement.canMove = true;
     }
 
     /// <summary>
@@ -285,6 +299,7 @@ public class AI_DogSimple : MonoBehaviour
         // Throw upward-forward
         Vector3 throwDirection = transform.forward + Vector3.up * 0.5f;
         package.Throw(dogThrowForce, throwDirection.normalized);
+        hasStolenPackage = false;
     }
 
     /// <summary>
@@ -293,5 +308,14 @@ public class AI_DogSimple : MonoBehaviour
     public AI_DogSimple npcInformation()
     {
         return this;
+    }
+
+    /// <summary>
+    /// Checks conditions for stealing a package. Returns either true or false, if a package can be stolen.
+    /// </summary>
+    public bool CanSteal()
+    {
+        bool recentlySawPlayer = Time.time - lastSeenTime <= playerMemoryDuration;
+        return !hasStolenPackage && recentlySawPlayer;
     }
 }

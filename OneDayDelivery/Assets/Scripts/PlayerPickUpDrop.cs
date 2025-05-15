@@ -35,7 +35,9 @@ public class PlayerPickUpDrop : MonoBehaviour
     public KeyCode outOfPocket = KeyCode.Y;
     public KeyCode pickUp = KeyCode.E;
 
-
+    /// <summary>
+    /// Set necessary variables once.
+    /// </summary>
     void Start()
     {
 
@@ -48,16 +50,19 @@ public class PlayerPickUpDrop : MonoBehaviour
         uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
-
+    /// <summary>
+    /// Set object in hand to null.
+    /// </summary>
     public void objectHandlerNuller()
     {
         objectGrabbable = null;
     }
 
+    /// <summary>
+    /// Player control inputs are detected in Update.
+    /// </summary>
     private void Update()
     {
-        //Debug.Log("WITHIN UPDATE: " + objectGrabbable);
-
         // Grab or drop object. Depending if player is holding something.
         if (Input.GetKeyDown(pickUp))
         {
@@ -66,6 +71,7 @@ public class PlayerPickUpDrop : MonoBehaviour
                 // Not carrying an object, try to grab.
                 if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
                 {
+                    //Debuging logs if necessary.
                     //Debug.Log("Raycast hit: " + raycastHit.transform.name);
                     //Debug.Log("Raycast hit object with tag: " + raycastHit.transform.tag);
                     //Debug.Log("Raycast hit collider with tag: " + raycastHit.collider.transform.tag);
@@ -96,9 +102,10 @@ public class PlayerPickUpDrop : MonoBehaviour
             objectGrabbable = null;
         }
 
+        // Put package into inventory, if there is space.
         else if (Input.GetKeyDown(intoPocket) && indexInventory < sizeOfInventory)
         {
-
+            // Package from hands into inventroy
             if (objectGrabbable!= null)
             {
                 inventory[indexInventory] = objectGrabbable;
@@ -109,6 +116,7 @@ public class PlayerPickUpDrop : MonoBehaviour
                 uiManager.AddPointToBackpackScore();
             }
 
+            // Package from ground into inventroy
             else if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
             {
 
@@ -128,7 +136,6 @@ public class PlayerPickUpDrop : MonoBehaviour
 
 
         // Get packages out of inventory
-        // Alternative method for key input: (Input.GetKeyDown(KeyCode.Y)
         else if (Input.GetKeyDown(outOfPocket) && objectGrabbable == null)
         {
             if (0 < indexInventory)
@@ -146,18 +153,28 @@ public class PlayerPickUpDrop : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Increase player throwForce.
+    /// </summary>
     public void throwForceBooster(float incrAmount)
     {
         throwForce += incrAmount;
     }
 
+    /// <summary>
+    /// A method used for removing packages from player. Checks if the collided NPC dog can steal a package or not. If it can, run other methods.Otherwise return.
+    /// </summary>
+    /// <param name="collidedDog"> NPC that collided with player </param>
     public void packageThievery(AI_DogSimple collidedDog)
     {
+        if (!collidedDog.CanSteal()) return;
+
         // Npc steals a package from the player's hands, not from inventory. Then turns and throws it away.
         if (objectGrabbable != null)
         {
+            //Debugging logs if necessary.
             //Debug.Log("Player has package in hand.");
+
             objectGrabbable.Grab(collidedDog.dogGrabPoint, collidedDog.transform);
             collidedDog.runAwayAndThrow(objectGrabbable);
             objectGrabbable = null;
@@ -166,6 +183,7 @@ public class PlayerPickUpDrop : MonoBehaviour
         // Npc steals a package from the player's inventory. Then turns and throws it away.
         else if (indexInventory != 0)
         {
+            //Debugging logs if necessary.
             //Debug.Log("Player has package in inventory. Transform info from dog:" + collidedDog.transform.position);
 
             objectGrabbable = inventory[indexInventory-1].GetComponent<ObjectGrabbable>();
