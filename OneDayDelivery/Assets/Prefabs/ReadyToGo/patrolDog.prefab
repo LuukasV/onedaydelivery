@@ -1,0 +1,219 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &859335619961375103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4892512971512959913}
+  m_Layer: 0
+  m_Name: dogGrabPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4892512971512959913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859335619961375103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1, z: 0.823}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6144802512894501973}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5966143783706575806
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 229.32327
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.33
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 342.00888
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.051051617
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.998696
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 174.147
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_Name
+      value: patrolDog
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      propertyPath: m_TagString
+      value: npcDog
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4892512971512959913}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1440854434932422288}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 291137334409751395}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353817572955965655}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3493372121215145456}
+  m_SourcePrefab: {fileID: 100100000, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+--- !u!4 &6144802512894501973 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+  m_PrefabInstance: {fileID: 5966143783706575806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6777189531066138351 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e1afe26cc929cc4095c25b8bff94798, type: 3}
+  m_PrefabInstance: {fileID: 5966143783706575806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1440854434932422288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777189531066138351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34caae80aeadc3d47ad47175c5e38bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xLargePatrolPointRange: 240
+  xSmallPatrolPointRange: 219
+  zLargePatrolPointRange: 345
+  zSmallPatrolPointRange: 335
+  patrolSpeed: 2
+  chaseSpeed: 5
+  startWaitTime: 3
+  currentWaitTime: 0
+  dogGrabPoint: {fileID: 4892512971512959913}
+  dogThrowForce: 800
+  playerTransform: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  viewRadius: 15
+  viewAngle: 90
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  walkPoint: {x: 0, y: 0, z: 0}
+  coneColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!195 &291137334409751395
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777189531066138351}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: -0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!65 &1353817572955965655
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777189531066138351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1.4583341}
+  m_Center: {x: -0.0000000019178559, y: 1, z: 0.27083397}
+--- !u!65 &3493372121215145456
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777189531066138351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9, y: 0.9, z: 0.9}
+  m_Center: {x: 0, y: 1, z: 0}
