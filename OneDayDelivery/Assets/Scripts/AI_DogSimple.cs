@@ -36,7 +36,7 @@ public class AI_DogSimple : MonoBehaviour
 
     private NavMeshAgent agent;
     [Header("Player detection and NPC movement")]
-    [SerializeField] private Transform playerTransform;
+    private Transform playerTransform;
     [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
 
     //Environment view
@@ -201,7 +201,7 @@ public class AI_DogSimple : MonoBehaviour
             float dstToPlayer = Vector3.Distance(transform.position, playerCollider.transform.position);
 
             // if player is within a certain angle, he will be detected
-            if (angle < viewAngle / 2f& !Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
+            if (angle < viewAngle / 2f && !Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
             {
                 //Debug.Log("I see within angle and radius");
                 m_PlayerInRange = true;
