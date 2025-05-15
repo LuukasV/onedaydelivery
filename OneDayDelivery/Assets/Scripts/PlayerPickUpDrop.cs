@@ -35,6 +35,11 @@ public class PlayerPickUpDrop : MonoBehaviour
     public KeyCode outOfPocket = KeyCode.Y;
     public KeyCode pickUp = KeyCode.E;
 
+    [Header("Prefab of object that is conjured in PackageZone")]
+    public GameObject packagePrefab;
+
+    private bool withinPackageZone = false; //if bool is true (toggled in different code), player is allowed to conjure packages out of thin air
+
     /// <summary>
     /// Set necessary variables once.
     /// </summary>
@@ -56,6 +61,15 @@ public class PlayerPickUpDrop : MonoBehaviour
     public void objectHandlerNuller()
     {
         objectGrabbable = null;
+    }
+
+    /// <summary>
+    /// Toggles PackageZoneToggle, whitch indicates if the player is within package area
+    /// </summary>
+    public void TogglePackageZone(bool active)
+    {
+        Debug.Log("PackageZone is: " + active);
+        withinPackageZone = active;
     }
 
     /// <summary>
@@ -131,6 +145,15 @@ public class PlayerPickUpDrop : MonoBehaviour
                     uiManager.AddPointToBackpackScore();
                     objectGrabbable = null;
                 }
+            }
+
+            //Conjure a package into inventory if within Package Zone
+            else if (withinPackageZone)
+            {
+                GameObject conjuredPackage = Instantiate(packagePrefab);
+                inventory[indexInventory] = conjuredPackage.GetComponent<ObjectGrabbable>();
+                indexInventory++;
+                uiManager.AddPointToBackpackScore();
             }
         }
 
