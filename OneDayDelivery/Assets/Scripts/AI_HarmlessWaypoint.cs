@@ -32,8 +32,10 @@ public class AI_HarmlessWaypoint : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //Debug.Log("Pathpending: " + agent.pathPending);
+        //Debug.Log("pathStatus: " + agent.pathStatus);
         // Sets npc's destination to the next waypoint and checks if the NPC has reached the waypoint.
-        agent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+        //agent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             // When wait time is over, NPC will move to the next waypoint and reset wait timer.
