@@ -28,10 +28,6 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
     public float groundDistance = 0.4f;
-
-    // TEST�NG NEW JUMP
-    // Tester for gravitifier timer. DELETE WHEN NOT NECESSARY.
-    //public float waitTimeForCounterGrav;
     public float counterGravStr;
 
     [Header("Keybinds")]
@@ -43,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     bool jumpingInput;
     bool restartInput;
     bool walkInput;
-    
+
 
     [Header("Changable values for play testing")]
     [SerializeField] private float throwForceIncrAmount;
@@ -61,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Variable change access")]
     // how does this work in practice? What variable type. with player pickup drop type.
-    [SerializeField] private Transform accessToThrowForce;
+    [SerializeField] private Transform accessToChild;
 
     [Header("Variable for disabling moving")]
     public bool canMove = true; // Boolean for disabling movement
@@ -108,9 +104,6 @@ public class PlayerMovement : MonoBehaviour
             readyToJump = false;
             Jump();
 
-            // Test for timed antigravity outside of fixed update time stamp. DELETE WHEN NOT NECESSARY.
-            //StartCoroutine (Gravitifier());
-
             Invoke(nameof(ResetJump), jumpCooldown);
         }
         jumpingInput = false;
@@ -143,12 +136,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         ResetJump();
-
-        //We determine, if any upgrades are in effect
-        if (GameData.item2Active)
-        {
-            ActivateJumpBuff();
-        }
     }
 
     /// <summary>
@@ -199,18 +186,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // HARD CAP ON MOVESPEED, EVEN DURING JUMPING. USE THIS OR speedControl
-    private void SpeedControls()
-    {
-        Vector3 flatVel = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z);
-
-        if (flatVel.magnitude > moveSpeed)
-        {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.linearVelocity = new Vector3(limitedVel.x, limitedVel.y, limitedVel.z);
-        }
-    }
-
     /// <summary>
     /// Jump mechanics for player's character.
     /// </summary>
@@ -219,24 +194,6 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
-
-    // TESTABLE METHOD FOR TIMED ANTIGRAVITY
-    //private IEnumerator Gravitifier()
-    //{
-    //    yield return new WaitForSeconds(waitTimeForCounterGrav);
-
-    //    //while (!grounded)
-    //    //{
-    //    //    rb.AddForce(-transform.up * counterGravStr, ForceMode.Force); // Apply constant downward force
-    //    //    yield return new WaitForSeconds(0.05f); // Adjust frequency of force application
-    //    //}
-
-    //    while (!grounded)
-    //    {
-    //        rb.AddForce(-transform.up * counterGravStr * Time.fixedDeltaTime, ForceMode.Force);
-    //        yield return new WaitForFixedUpdate();
-    //    }
-    //}
 
     /// <summary>
     /// Method that resets player jump cooldown to make the character ready to jump.
@@ -249,7 +206,7 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Detects objects that the player collides with.
     /// </summary>
-    /// <param name="other"> A collider that checks what the player picks up </param>
+    /// <param name="other"> Object that the player collided with </param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("jumpBuff"))
@@ -259,22 +216,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("throwBuff"))
         {
-            accessToThrowForce.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
+            accessToChild.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
             other.gameObject.SetActive(false);
         }
-    }
-
-    //Activates Throw Buff
-    private void ActivateThrowBuff()
-    {
-        accessToThrowForce.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
-        Debug.Log("Player has a throwbuff activated");
-    }
-
-    //Activates Jump Buff
-    private void ActivateJumpBuff()
-    {
-        jumpForce += jumpForceIncrAmount;
-        Debug.Log("Player has a jumpbuff activated");
+        else if (other.gameObject.CompareTag("npcDog"))
+        {
+            accessToChild.GetComponent<PlayerPickUpDrop>().packageThievery(other.gameObject.GetComponent<AI_DogSimple>().npcInformation());
+        }
     }
 }
