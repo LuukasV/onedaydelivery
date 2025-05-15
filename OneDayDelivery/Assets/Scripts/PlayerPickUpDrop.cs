@@ -13,9 +13,6 @@ public class PlayerPickUpDrop : MonoBehaviour
     [SerializeField] private LayerMask pickUpLayerMask;
     [SerializeField] private Transform parent;
 
-    //private Component objectGrabbablen instead?
-    //private Component objectGrabbable;?
-
     private ObjectGrabbable objectGrabbable;
 
     private UIManager uiManager;
@@ -41,21 +38,14 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     void Start()
     {
-        //UIManager script is linked with the PlayerUI component
-        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
-
-        //We determine if inventory upgrades are in effect
-        if (GameData.item1Active)
-        {
-            Debug.Log("Player has a inventorybuff activated");
-            sizeOfInventory = 10;
-            uiManager.ChangeMaximum(10);
-        }
 
         speedChanger = playerParentBody.GetComponent<PlayerMovement>();
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
         pickUpDistance = 4f;
+
+        //UIManager script is linked with the PlayerUI component
+        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
 
@@ -74,15 +64,11 @@ public class PlayerPickUpDrop : MonoBehaviour
             if (objectGrabbable == null)
             {
                 // Not carrying an object, try to grab.
-                //float pickUpDistance = 4f;
                 if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
                 {
                     //Debug.Log("Raycast hit: " + raycastHit.transform.name);
                     //Debug.Log("Raycast hit object with tag: " + raycastHit.transform.tag);
                     //Debug.Log("Raycast hit collider with tag: " + raycastHit.collider.transform.tag);
-
-                    // Original, add as ELSE IF? Or original as IF and spherecast as ELSEIF?
-                    //if (raycastHit.transform.TryGetComponent(out objectGrabbable))
 
                     if (raycastHit.collider.transform.CompareTag("pickupCollider"))
                     {
@@ -90,10 +76,9 @@ public class PlayerPickUpDrop : MonoBehaviour
                         objectGrabbable = parentTransform.GetComponent<ObjectGrabbable>();
                         objectGrabbable.Grab(objectGrabPointTransform, parent);
                     }
-                 }
-                //  ELSE IF speherecasti?
-                //  LISÄä laatioklle laspi ja collider trigger, omalle layerille.
+                }
             }
+
             // Currently carrying something, drop
             else
             {
@@ -106,32 +91,15 @@ public class PlayerPickUpDrop : MonoBehaviour
         else if (Input.GetKeyDown(throwKey) && objectGrabbable != null)
         {
             Vector3 throwDirection = objectGrabPointTransform.forward;
-            // changed order of drop and throw
             objectGrabbable.Drop();
             objectGrabbable.Throw(throwForce, throwDirection);
             objectGrabbable = null;
         }
 
-        //Put it in inventory
-        //else if (Input.GetKeyDown(intoPocket) && objectGrabbable != null)
-        //{
-        //    //Alterantive method for inventory system? 
-        //    if (indexInventory < sizeOfInventory)
-        //        {
-        //            inventory[indexInventory] = objectGrabbable;
-        //            objectGrabbable.gameObject.SetActive(false);
-        //            indexInventory++;
-        //            speedChanger.moveSpeed -= speedChangeOfInventory;
-        //            objectGrabbable = null;
-
-        //            uiManager.AddPointToBackpackScore();
-        //        }
-        //}
-
         else if (Input.GetKeyDown(intoPocket) && indexInventory < sizeOfInventory)
         {
 
-            if(objectGrabbable!= null)
+            if (objectGrabbable!= null)
             {
                 inventory[indexInventory] = objectGrabbable;
                 objectGrabbable.gameObject.SetActive(false);
@@ -154,18 +122,7 @@ public class PlayerPickUpDrop : MonoBehaviour
                     speedChanger.moveSpeed -= speedChangeOfInventory;
                     uiManager.AddPointToBackpackScore();
                     objectGrabbable = null;
-            }
-
-                // Alterantive method for inventory system? 
-                //if (indexInventory < sizeOfInventory)
-                //{
-                //    inventory[indexInventory] = objectGrabbable;
-                //    objectGrabbable.gameObject.SetActive(false);
-                //    indexInventory++;
-                //    speedChanger.moveSpeed -= speedChangeOfInventory;
-                //    uiManager.AddPointToBackpackScore();
-                //    objectGrabbable = null;
-                //}
+                }
             }
         }
 
@@ -189,10 +146,40 @@ public class PlayerPickUpDrop : MonoBehaviour
         }
     }
 
-    // maek variable public? instead of it being private and having a public method.
-    // keep things private so you cant change them from outside the class but in this case ok?
+
     public void throwForceBooster(float incrAmount)
     {
         throwForce += incrAmount;
+    }
+
+    public void packageThievery(AI_DogSimple collidedDog)
+    {
+        // Npc steals a package from the player's hands, not from inventory. Then turns and throws it away.
+        if (objectGrabbable != null)
+        {
+            //Debug.Log("Player has package in hand.");
+            objectGrabbable.Grab(collidedDog.dogGrabPoint, collidedDog.transform);
+            collidedDog.runAwayAndThrow(objectGrabbable);
+            objectGrabbable = null;
+        }
+
+        // Npc steals a package from the player's inventory. Then turns and throws it away.
+        else if (indexInventory != 0)
+        {
+            //Debug.Log("Player has package in inventory. Transform info from dog:" + collidedDog.transform.position);
+
+            objectGrabbable = inventory[indexInventory-1].GetComponent<ObjectGrabbable>();
+            objectGrabbable.transform.position = collidedDog.dogGrabPoint.position;
+            objectGrabbable.transform.rotation = collidedDog.dogGrabPoint.rotation;
+            objectGrabbable.gameObject.SetActive(true);
+            objectGrabbable.Grab(collidedDog.dogGrabPoint, collidedDog.transform);
+            indexInventory--;
+            speedChanger.moveSpeed += speedChangeOfInventory;
+
+            collidedDog.runAwayAndThrow(objectGrabbable);
+            objectGrabbable = null;
+
+            uiManager.RemovePointFromBackpackScore();
+        }
     }
 }
