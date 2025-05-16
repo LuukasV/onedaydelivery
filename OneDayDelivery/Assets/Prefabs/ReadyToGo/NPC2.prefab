@@ -249,8 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9958cf69ba3ae41b4036c15a5b7686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
-  audioClips: []
+  audioSource: {fileID: 8940652434267562936}
+  audioClips:
+  - {fileID: 8300000, guid: 6f99946631b94d540ade16ab8388c89e, type: 3}
+  - {fileID: 8300000, guid: 4f7e554c1a7837d4a8bc5515cfd9f3e2, type: 3}
+  - {fileID: 8300000, guid: bcbda1d75ae1eac448fec4618bb9a749, type: 3}
   minDelay: 5
   maxDelay: 12
 --- !u!195 &6102863402687616223
@@ -328,8 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3838feed03ca57d40ab3c1063fde325a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oof: {fileID: 0}
-  audioSource: {fileID: 0}
+  oof: {fileID: 8300000, guid: 7be8c415e42bd5e449b192a0c7f11cd8, type: 3}
+  audioSource: {fileID: 8940652434267562936}
   painParticles: {fileID: 4076990263644309777, guid: 039099cb5c4972d44bbfab3cb48bb731, type: 3}
 --- !u!136 &7007326500037210772
 CapsuleCollider:

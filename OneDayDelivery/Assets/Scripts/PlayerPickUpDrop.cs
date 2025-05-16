@@ -39,6 +39,8 @@ public class PlayerPickUpDrop : MonoBehaviour
     public GameObject packagePrefab;
 
     private bool withinPackageZone = false; //if bool is true (toggled in different code), player is allowed to conjure packages out of thin air
+    public AudioClip dogAlert;
+    public AudioClip dogPush;
 
     /// <summary>
     /// Set necessary variables once.
@@ -202,6 +204,9 @@ public class PlayerPickUpDrop : MonoBehaviour
             objectGrabbable.Grab(collidedDog.dogGrabPoint, collidedDog.transform);
             collidedDog.runAwayAndThrow(objectGrabbable);
             objectGrabbable = null;
+
+            AudioSource.PlayClipAtPoint(dogAlert, collidedDog.transform.position, 0.8f); //play dog alert sound
+            AudioSource.PlayClipAtPoint(dogPush, collidedDog.transform.position, 0.8f); //play dog push sound
         }
 
         // Npc steals a package from the player's inventory. Then turns and throws it away.
@@ -222,6 +227,9 @@ public class PlayerPickUpDrop : MonoBehaviour
             objectGrabbable = null;
 
             uiManager.RemovePointFromBackpackScore();
+
+            AudioSource.PlayClipAtPoint(dogAlert, collidedDog.transform.position, 0.8f); //play dog alert sound
+            AudioSource.PlayClipAtPoint(dogPush, collidedDog.transform.position, 0.8f); //play dog push sound
         }
     }
 }
