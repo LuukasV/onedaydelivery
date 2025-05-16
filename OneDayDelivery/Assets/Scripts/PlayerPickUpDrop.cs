@@ -47,14 +47,21 @@ public class PlayerPickUpDrop : MonoBehaviour
     /// </summary>
     void Start()
     {
+        //UIManager script is linked with the PlayerUI component
+        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
+
+        //We determine if inventory upgrades are in effect
+        if (GameData.item1Active)
+        {
+            //Debug.Log("Player has a inventorybuff activated");
+            sizeOfInventory = 10;
+            uiManager.ChangeMaximum(10);
+        }
 
         speedChanger = playerParentBody.GetComponent<PlayerMovement>();
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
         pickUpDistance = 4f;
-
-        //UIManager script is linked with the PlayerUI component
-        uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
     /// <summary>
