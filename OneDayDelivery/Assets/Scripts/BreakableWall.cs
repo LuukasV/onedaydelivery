@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Script for breaking corcrete walls. The walls can be destroyed by packages or by player. 
 public class BreakableWall : MonoBehaviour
 {
     public AudioClip breakSound;
@@ -10,7 +11,7 @@ public class BreakableWall : MonoBehaviour
     {
         if (isBroken) return;
 
-        if (other.CompareTag("Mailable"))
+        if (other.CompareTag("Mailable") || other.CompareTag("Player"))
         {
             Vector3 impactPoint = other.ClosestPointOnBounds(transform.position);
             BreakWall(impactPoint);
