@@ -85,7 +85,7 @@ public static class SaveSystem
         }
         catch   //If the save file is empty, we will change GameData to starting defaults (in the case of willfull reset)
         {
-            Debug.Log("No Saved Data/File found");
+            // Debug.Log("No Saved Data/File found");
 
             GameData.level1_star1 = false;
             GameData.level1_star2 = false;

@@ -26,7 +26,7 @@ public class MainMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         //We Load the Saved GameData (the Data has been Saved when moving between levels)
-        Debug.Log("Main Menu activated; the Game has been LOADED");
+        // Debug.Log("Main Menu activated; the Game has been LOADED");
         SaveSystem.LoadGameData();
 
         //We check if any of the level's stars are achieved from GameData
@@ -59,14 +59,14 @@ public class MainMenuController : MonoBehaviour
     //Ends the Game
     public void ButtonEffect_ConfirmQuit()
     {
-        Debug.Log("Confirm Quit has been pressed");
+        // Debug.Log("Confirm Quit has been pressed");
         Application.Quit();
     }
 
     //Loads Scene 1 in Unity Build Settings
     public void ButtonEffect_Level1()
     {
-        Debug.Log("Level 1 button has been pressed");
+        // Debug.Log("Level 1 button has been pressed");
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
@@ -74,7 +74,7 @@ public class MainMenuController : MonoBehaviour
     //Loads Scene 2 in Unity Build Settings
     public void ButtonEffect_Level2()
     {
-        Debug.Log("Level 2 button has been pressed");
+        // Debug.Log("Level 2 button has been pressed");
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
@@ -82,7 +82,7 @@ public class MainMenuController : MonoBehaviour
     //Orders the saved data to be cleared and loads the main menu again (with empty savegame)
     public void ClearDataButton()
     {
-        Debug.Log("Clear memory pressed");
+        // Debug.Log("Clear memory pressed");
 
         SaveSystem.ClearData();
 
@@ -92,7 +92,7 @@ public class MainMenuController : MonoBehaviour
     //Saves the game, if player closes the game/application
     private void OnApplicationQuit()
     {
-        Debug.Log("Player has quit the game; the Game has been SAVED");
+        // Debug.Log("Player has quit the game; the Game has been SAVED");
         SaveSystem.SaveGameState();
     }
 
@@ -100,6 +100,6 @@ public class MainMenuController : MonoBehaviour
     public void adjustSensitivity()
     {
         PlayerPrefs.SetFloat("CurrentMouseSensitivity", mouseSensSlider.value * 10);
-        Debug.Log("New Mouse sensitivity is now: " + mouseSensSlider.value * 10);
+        // Debug.Log("New Mouse sensitivity is now: " + mouseSensSlider.value * 10);
     }
 }

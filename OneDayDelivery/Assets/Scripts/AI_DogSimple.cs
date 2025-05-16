@@ -1,9 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 /// <summary>
 /// NPC script intended for guard dog use. Dog detects and chases player. If player is caught, steals package and throws it.
@@ -289,7 +286,7 @@ public class AI_DogSimple : MonoBehaviour
             yield return null;
         }
 
-        // Ensure final rotation is exactly 180° rotated
+        // Ensure final rotation is exactly 180ï¿½ rotated
         transform.rotation = endRot;
 
         yield return new WaitForSeconds(0.1f); // Short delay for realism

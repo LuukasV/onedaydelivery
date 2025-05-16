@@ -70,7 +70,7 @@ public class PlayerPickUpDrop : MonoBehaviour
     /// </summary>
     public void TogglePackageZone(bool active)
     {
-        Debug.Log("PackageZone is: " + active);
+        // Debug.Log("PackageZone is: " + active);
         withinPackageZone = active;
     }
 

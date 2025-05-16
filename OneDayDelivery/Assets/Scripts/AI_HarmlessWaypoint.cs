@@ -22,7 +22,7 @@ public class AI_HarmlessWaypoint : MonoBehaviour
         agent.isStopped = false;
         agent.speed = speedWalk;
         agent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-        Debug.Log(waypoints[m_CurrentWaypointIndex].position);
+        //(waypoints[m_CurrentWaypointIndex].position);
 
         currentWaitTime = startWaitTime;
     }

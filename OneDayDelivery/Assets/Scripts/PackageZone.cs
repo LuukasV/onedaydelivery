@@ -17,7 +17,7 @@ public class PackageZone : MonoBehaviour
     {
         if(collider.gameObject.tag == "Player")
         {
-            Debug.Log("Player is within PackageZone");
+            // Debug.Log("Player is within PackageZone");
             playerPickupScript.TogglePackageZone(true);
         }
     }
@@ -27,7 +27,7 @@ public class PackageZone : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            Debug.Log("Player is outside PackageZone");
+            // Debug.Log("Player is outside PackageZone");
             playerPickupScript.TogglePackageZone(false);
         }
     }

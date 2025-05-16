@@ -23,7 +23,7 @@ public class Minefield : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player hit the minefield");
+            // Debug.Log("Player hit the minefield");
 
             PlayExplotionSound();
 
@@ -40,7 +40,7 @@ public class Minefield : MonoBehaviour
 
             if (playerRb != null)
             {
-                Debug.Log("Throwing the player");
+                // Debug.Log("Throwing the player");
 
                 playerMovementScript.canMove = false;
                 StartCoroutine(ReenableMovementAfterDelay(2.5f));
@@ -53,7 +53,8 @@ public class Minefield : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("playerRb is not set in the inspector!");
+                // Debug.LogWarning("playerRb is not set in the inspector!");
+                return;
             }
         }
     }
