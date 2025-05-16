@@ -284,7 +284,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   viewRadius: 15
-  viewAngle: 90
+  viewAngle: 300
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
