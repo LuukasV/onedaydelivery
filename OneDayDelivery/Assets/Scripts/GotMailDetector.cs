@@ -4,7 +4,8 @@ using UnityEngine;
 //Also teleport the detected object inside the mailbox
 public class GotMailDetector : MonoBehaviour
 {
-    public AudioSource audioSource;
+    public AudioSource audioSource; //Package delivered sound effect
+    public ParticleSystem confetti; //Particle system for confetti
     public GameObject whereToTeleport;  //Grabs the x, y, z values to the mail for teleport
     private UIManager uiManager;
     private bool maxAmountPerBox;
@@ -36,8 +37,11 @@ public class GotMailDetector : MonoBehaviour
         //Also, by popular demand, grab the object and insert it inside the mailbox
         if(collider.gameObject.tag == "Mailable" && maxAmountPerBox)
         {
-            //Added a point to UI-element
+            //Play package delivered sound effect
             audioSource.Play();
+
+            //Play confetti particle system
+            confetti.Play();
 
             temp = playerObjectHandler.transform.Find("PlayerObj_Capsule");
             temp.GetComponent<PlayerPickUpDrop>().objectHandlerNuller();
