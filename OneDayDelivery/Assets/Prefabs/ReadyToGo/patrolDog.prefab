@@ -137,9 +137,11 @@ MonoBehaviour:
   chaseSpeed: 5
   startWaitTime: 3
   currentWaitTime: 0
+  dogPushPlayerStr: 0
+  dogPushDisableMovementTime: 0
   dogGrabPoint: {fileID: 4892512971512959913}
   dogThrowForce: 800
-  playerTransform: {fileID: 0}
+  playerMemoryDuration: 1.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -147,7 +149,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   viewRadius: 15
-  viewAngle: 90
+  viewAngle: 300
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
