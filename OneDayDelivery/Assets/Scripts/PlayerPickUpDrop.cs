@@ -130,6 +130,16 @@ public class PlayerPickUpDrop : MonoBehaviour
                 uiManager.AddPointToBackpackScore();
             }
 
+            //Conjure a package into inventory if within Package Zone
+            else if (withinPackageZone)
+            {
+                GameObject conjuredPackage = Instantiate(packagePrefab);
+                conjuredPackage.SetActive(false);
+                inventory[indexInventory] = conjuredPackage.GetComponent<ObjectGrabbable>();
+                indexInventory++;
+                uiManager.AddPointToBackpackScore();
+            }
+
             // Package from ground into inventroy
             else if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
             {
@@ -145,15 +155,6 @@ public class PlayerPickUpDrop : MonoBehaviour
                     uiManager.AddPointToBackpackScore();
                     objectGrabbable = null;
                 }
-            }
-
-            //Conjure a package into inventory if within Package Zone
-            else if (withinPackageZone)
-            {
-                GameObject conjuredPackage = Instantiate(packagePrefab);
-                inventory[indexInventory] = conjuredPackage.GetComponent<ObjectGrabbable>();
-                indexInventory++;
-                uiManager.AddPointToBackpackScore();
             }
         }
 
