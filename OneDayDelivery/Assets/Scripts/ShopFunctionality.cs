@@ -43,9 +43,9 @@ public class ShopFunctionality : MonoBehaviour
     //Initiates the purchase of Item 1
     public void BuyItem1()
     {
-        if(availableStars >= 2)
+        if (availableStars >= 2)
         {
-            Debug.Log("Item 1 has been bought");
+            // Debug.Log("Item 1 has been bought");
             GameData.item1Active = true;
             GameData.starsSpent += 2;
 
@@ -56,9 +56,11 @@ public class ShopFunctionality : MonoBehaviour
             postmarksLeft.text = availableStars.ToString();
             item1soldText.text = "SOLD!";
 
-        } else
+        }
+        else
         {
-            Debug.Log("The Player Could not afford Item 1");
+            // Debug.Log("The Player Could not afford Item 1");
+            return;
         }
     }
 
@@ -67,7 +69,7 @@ public class ShopFunctionality : MonoBehaviour
     {
         if (availableStars >= 2)
         {
-            Debug.Log("Item 2 has been bought");
+            // Debug.Log("Item 2 has been bought");
             GameData.item2Active = true;
             GameData.starsSpent += 2;
 
@@ -81,7 +83,8 @@ public class ShopFunctionality : MonoBehaviour
         }
         else
         {
-            Debug.Log("The Player Could not afford Item 2");
+            // Debug.Log("The Player Could not afford Item 2");
+            return;
         }
     }
 

@@ -16,7 +16,7 @@ public class PlayerBumpNPC : MonoBehaviour
         CapsuleCollider colliderHitbox = colliders[1];
 
         if (other.CompareTag("Player") || other.CompareTag("Mailable")) {
-            Debug.Log("PLAM");
+            // Debug.Log("PLAM");
 
             //Disable NPC AI and activate physics
             gameObject.AddComponent<Rigidbody>();

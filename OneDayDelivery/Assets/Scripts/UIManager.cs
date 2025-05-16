@@ -167,7 +167,7 @@ public class UIManager : MonoBehaviour
         }
 
         //We save the GameData
-        Debug.Log("Player has completed the level; the Game has been SAVED");
+        // Debug.Log("Player has completed the level; the Game has been SAVED");
         SaveSystem.SaveGameState();
 
         //We activate End Level screen
@@ -177,14 +177,14 @@ public class UIManager : MonoBehaviour
     //Goes back to main menu
     public void BackToMenu()
     {
-        Debug.Log("Quit button has been pressed");
+        // Debug.Log("Quit button has been pressed");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     //Restarts the current level
     public void Restart()
     {
-        Debug.Log("Restart button has been pressed");
+        // Debug.Log("Restart button has been pressed");
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -195,7 +195,7 @@ public class UIManager : MonoBehaviour
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
-        Debug.Log("Cancel button has been pressed");
+        // Debug.Log("Cancel button has been pressed");
         popUpCanvas.SetActive(false);
         Time.timeScale = 1;
         timerActive = true;
