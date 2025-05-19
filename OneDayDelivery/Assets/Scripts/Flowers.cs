@@ -1,6 +1,8 @@
 using UnityEngine;
 
-// Player can stomp flowers and make them flat. Code replaces the original flower with the flat one
+/// <summary>
+/// Player can stomp flowers and make them flat. Script replaces the original flower with the stomped variant with random rotation
+/// </summary>
 public class Flowers : MonoBehaviour
 {
     public GameObject stompedFlower;

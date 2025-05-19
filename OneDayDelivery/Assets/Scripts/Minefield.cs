@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-//Minefield acts as a boundary to the level. When activated, the minefield throws the player towards to the center of the level
+/// <summary>
+/// Minefield acts as a boundary to the level. When activated, the minefield throws the player towards to the center of the level
+/// </summary>
 public class Minefield : MonoBehaviour
 {
-    private Vector3 resetPosition = new Vector3(300f, 50f, 275f); // Direction, where player is pushed
+    private Vector3 resetPosition = new Vector3(300f, 50f, 275f); // Direction, where player is pushed. Hard coded location at the center of the level
     public Rigidbody playerRb;   // Player rigidbody component
     public float throwForce = 100f;
     public float upForce = 50f;
@@ -35,7 +37,7 @@ public class Minefield : MonoBehaviour
                 ps.Play();
             }
 
-            // Destroy effect after the duration
+            // Destroy effect after the duration. (Hierarchy)
             Destroy(explosion, 5f);
 
             if (playerRb != null)

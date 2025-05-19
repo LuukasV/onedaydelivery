@@ -1,8 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// Simple class for breaking windows. Windows have intact and broken variant. After contact the window will be replaced by the broken variant.
+/// </summary>
 public class BreakableWindow : MonoBehaviour
 {
-    public GameObject brokenWindow;
+    public GameObject brokenWindow; // Broken variant of the window
     public AudioClip breakSound;
 
     private void OnTriggerEnter(Collider other)
@@ -13,6 +16,9 @@ public class BreakableWindow : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Breaks the window by replacing it with the brokenWindow GameObject
+    /// </summary>
     void BreakWindow()
     {
         Vector3 spawnPosition = transform.position;
