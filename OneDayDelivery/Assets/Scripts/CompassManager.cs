@@ -52,7 +52,9 @@ public class CompassManager : MonoBehaviour
         }
     }
 
-    //Adds a new icon to the Compass
+    /// <summary>
+    /// Adds a new icon to the Compass
+    /// </summary>
     public void AddCompassIcon(CompassIcon icon)
     {
         GameObject newIcon = Instantiate(iconPrefab, compassImage.transform);
@@ -62,7 +64,10 @@ public class CompassManager : MonoBehaviour
         compassIcons.Add(icon);
     }
 
-    //Position Compass Icon correctly based on player and Compass Flag position
+    /// <summary>
+    /// Position of Compass Icon based on player and Compass Flag position
+    /// </summary>
+    /// <param name="icon"> Compass Icon which position is used</param>
     Vector2 GetPosOnCompass(CompassIcon icon)
     {
 
@@ -75,7 +80,10 @@ public class CompassManager : MonoBehaviour
 
     }
 
-    //Disablees the icon in the compass with the given id
+    /// <summary>
+    /// Disablees the icon in the compass with the given id
+    /// </summary>
+    /// <param name="idOfIcon"> ID of Icon which is to disabled </param>
     public void disableSpecificIcon(int idOfIcon)
     {
         for (int i = 0; i < compassIcons.Count; i++)

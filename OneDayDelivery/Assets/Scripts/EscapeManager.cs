@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//Does things when the player touches objects collision zone
+// Mechanics when the Player Enters the Escape Zone
 public class EscapeManager : MonoBehaviour
 {
     private UIManager uiManager;
@@ -12,7 +12,7 @@ public class EscapeManager : MonoBehaviour
         uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
     }
 
-    //When the Player touches the assigned collisonZone, something happens
+    //When the Player touches the assigned collisonZone, the UI Manager is told to end the level
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")

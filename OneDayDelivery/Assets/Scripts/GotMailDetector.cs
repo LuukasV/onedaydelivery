@@ -29,7 +29,7 @@ public class GotMailDetector : MonoBehaviour
         uiCompassManager = GameObject.FindWithTag("PlayerUI").GetComponentInChildren<CompassManager>();
     }
 
-    //What happens when something touches the Collider whith onTrigger event
+    //The Player scores a point and the mailed package is rendered unmailable/ungrabbable
     //Something happens only if the touching object has the Tag "Mailable"
     private void OnTriggerEnter(Collider collider)
     {

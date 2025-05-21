@@ -1,7 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-//Management script to the item/upgrade shop, its UI elements, and functions
+// Management script to the item/upgrade shop, its UI elements, and functions
 public class ShopFunctionality : MonoBehaviour
 {
     public GameObject soldIcon1;
@@ -40,7 +40,9 @@ public class ShopFunctionality : MonoBehaviour
         }
     }
 
-    //Initiates the purchase of Item 1
+    /// <summary>
+    /// Initiates the purchase of Item 1
+    /// </summary>
     public void BuyItem1()
     {
         if (availableStars >= 2)
@@ -64,7 +66,9 @@ public class ShopFunctionality : MonoBehaviour
         }
     }
 
-    //Initiates the purchase of Item 2
+    /// <summary>
+    /// Initiates the purchase of Item 2
+    /// </summary>
     public void BuyItem2()
     {
         if (availableStars >= 2)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+//Inner mechanics of CompassIcon Class
 public class CompassIcon : MonoBehaviour
 {
     public Sprite icon;

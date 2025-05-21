@@ -5,6 +5,7 @@ using UnityEngine.UI;
 //Controller for the Main Menu and its functions
 //Includes functions for all main menu buttons
 //Manages information on player score/money between levels
+//Manages Savings, as PlayerUI is assumed to be disabled
 public class MainMenuController : MonoBehaviour
 {
     public GameObject popUpCanvas;
@@ -56,14 +57,18 @@ public class MainMenuController : MonoBehaviour
 
     }
 
-    //Ends the Game
+    /// <summary>
+    /// Ends the Game
+    /// </summary>
     public void ButtonEffect_ConfirmQuit()
     {
         // Debug.Log("Confirm Quit has been pressed");
         Application.Quit();
     }
 
-    //Loads Scene 1 in Unity Build Settings
+    /// <summary>
+    /// Loads Scene 1 in Unity Build Settings
+    /// </summary>
     public void ButtonEffect_Level1()
     {
         // Debug.Log("Level 1 button has been pressed");
@@ -71,7 +76,9 @@ public class MainMenuController : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 
-    //Loads Scene 2 in Unity Build Settings
+    /// <summary>
+    /// Loads Scene 2 in Unity Build Settings
+    /// </summary>
     public void ButtonEffect_Level2()
     {
         // Debug.Log("Level 2 button has been pressed");
@@ -79,7 +86,9 @@ public class MainMenuController : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
 
-    //Orders the saved data to be cleared and loads the main menu again (with empty savegame)
+    /// <summary>
+    /// Orders the saved data to be cleared and loads the main menu again (with empty savegame/GameData)
+    /// </summary>
     public void ClearDataButton()
     {
         // Debug.Log("Clear memory pressed");
@@ -89,14 +98,18 @@ public class MainMenuController : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
-    //Saves the game, if player closes the game/application
+    /// <summary>
+    /// Saves the game, if player closes the game/application
+    /// </summary>
     private void OnApplicationQuit()
     {
         // Debug.Log("Player has quit the game; the Game has been SAVED");
         SaveSystem.SaveGameState();
     }
 
-    //Sets a new mouse sensitivity to Player preferences
+    /// <summary>
+    /// Sets a new mouse sensitivity to Player preferences
+    /// </summary>
     public void adjustSensitivity()
     {
         PlayerPrefs.SetFloat("CurrentMouseSensitivity", mouseSensSlider.value * 10);

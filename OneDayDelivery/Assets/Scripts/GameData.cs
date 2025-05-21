@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 using System.IO;
 
-//This class contains all data that we want toc arry between scenes
+//This class contains all data that we want to carry between scenes
 //It can be accessed anywhere with GameData.value = orange;
-//As a default the GameData updates itself from SavedData
+//As a default the GameData must be updates with SaveSystem every Application restart/start
 public static class GameData
 {
     public static bool level1_star1 = false;
@@ -24,13 +24,16 @@ public static class GameData
     public static int starsSpent = 0;
 }
 
-//Controls the Saving of GameData, takes all savable data from GameData
+//Controls the Saving/Loading of GameData, takes all savable data from GameData
 //On command, loads/writes the (possible) saved data from a file to GameData
 //On command, cleares saved data from a file
 public static class SaveSystem
 {
     public const string FILENAME_SAVEDATA = "/savedata.txt";
 
+    /// <summary>
+    /// Writes the current GameData to a dedicated File to be saved between Applications Uses
+    /// </summary>
     public static void SaveGameState()
     {
         string filePathSaveData = Application.persistentDataPath + FILENAME_SAVEDATA;
@@ -53,7 +56,10 @@ public static class SaveSystem
         File.WriteAllText(filePathSaveData, saveData);
     }
 
-    //We try to load GameData from saved file
+    /// <summary>
+    /// Tries to load GameData from a dedicated File to be used between Applications Uses
+    /// If no previous savegames/Files exist, nothing happens and GameData will use defaults in the session
+    /// </summary>
     public static void LoadGameData()
     {
         try
@@ -101,7 +107,10 @@ public static class SaveSystem
         }
     }
 
-    //Cleares saved data from saved file
+    /// <summary>
+    /// Cleares saved data from saved file
+    /// ATTENTION: GameData must be LOADED (from SaveData) with empty values/File to restore it also to defaults
+    /// </summary>
     public static void ClearData()
     {
         string filePathSaveData = Application.persistentDataPath + FILENAME_SAVEDATA;
