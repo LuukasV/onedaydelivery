@@ -6,7 +6,9 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using System;
 
-//Manages the Player's Point system, and Timer
+//Manages the Player's Point system, and general UI mechanics
+//Also works as a general master script for inter-script operations
+//Includes Level Changes, and Saving
 public class UIManager : MonoBehaviour
 {
     private int boxesMailedScore;
@@ -33,7 +35,7 @@ public class UIManager : MonoBehaviour
     //This runs earned postmarks (named stars for simplicity)
     //private bool star1;
     //private bool star2;
-    public float secondaryTimeAchievementInSeconds;
+    public float secondaryTimeAchievementInSeconds; //ATTENTION: Seconds must be in the format: secondsInTimer - the value of time relapsed from game start
     private bool star4 = false;
 
     public GameObject level1_star1;
@@ -68,7 +70,7 @@ public class UIManager : MonoBehaviour
     }
 
     //Every update, the timer goes down (and updates)
-    //We also check if esc-button is pressed, if it is. We activate the pop-up window and pause the game (and timer)
+    //This subroutine also checks if esc-button is pressed, if it is. It activates the pop-up window and pauses the game (and the timer)
     private void Update()
     {
         if (Input.GetKeyDown("escape"))
@@ -94,7 +96,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //Adds one point to the UI's score system and activates escape zone if the score is full
+    /// <summary>
+    /// Adds one point to the UI's score system and activates escape zone if the score is full
+    /// </summary>
     public void AddPoint()
     {
         boxesMailedScore++;
@@ -108,7 +112,10 @@ public class UIManager : MonoBehaviour
 
     }
 
-    //Updates the timer, and changes the time format from pure seconds, to hh:mm:ss:s
+    /// <summary>
+    /// Updates the timer, and changes the time format of entered value from pure seconds, to hh:mm:ss:s
+    /// </summary>
+    /// <param name="seconds"> Amount of seconds currently in the timer </param>
     public void UpdateTimer(float seconds)
     {
         TimeSpan timer = TimeSpan.FromSeconds(seconds);
@@ -122,13 +129,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //Activates the GameObject assigned to escapeZone
+    /// <summary>
+    /// Activates the GameObject assigned to escapeZone (Presumed to be EscapeZone)
+    /// </summary>
     public void ActivateEscape()
     {
         escapeZone.SetActive(true);
     }
 
-    //Brings up end level screen, initiates scoring and sets earned stars visible in the end level screen
+    /// <summary>
+    /// Brings up end level screen, initiates scoring and sets earned stars visible in the end level screen
+    /// </summary>
     public void EndLevel()
     {
         escapeText.text = "Well done :D";
@@ -174,21 +185,27 @@ public class UIManager : MonoBehaviour
         levelCompletedCanvas.SetActive(true);
     }
 
-    //Goes back to main menu
+    /// <summary>
+    /// Goes back to main menu
+    /// </summary>
     public void BackToMenu()
     {
         // Debug.Log("Quit button has been pressed");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
-    //Restarts the current level
+    /// <summary>
+    /// Restarts the current level
+    /// </summary>
     public void Restart()
     {
         // Debug.Log("Restart button has been pressed");
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
-    //Deactivates Quit menu and resumes game/timer
+    /// <summary>
+    /// Deactivates Quit menu and resumes game/timer
+    /// </summary>
     public void ContinueGame()
     {
         //Also button makes the cursor invisible again
@@ -201,27 +218,35 @@ public class UIManager : MonoBehaviour
         timerActive = true;
     }
 
-    //Increases the backpack score on the right side bottom by one
+    /// <summary>
+    /// Increases the backpack score on the player UI by one
+    /// </summary>
     public void AddPointToBackpackScore()
     {
         boxesInBackpack++;
         backpackScore.text = boxesInBackpack.ToString();
     }
 
-    //Decreases the backpack score on the right side bottom by one
+    /// <summary>
+    /// Decreases the backpack score on the player UI by one
+    /// </summary>
     public void RemovePointFromBackpackScore()
     {
         boxesInBackpack--;
         backpackScore.text = boxesInBackpack.ToString();
     }
 
-    //Sets the forth star as uclocked
+    /// <summary>
+    /// Sets the forth achievement as unlocked
+    /// </summary>
     public void ScoreGoal()
     {
         star4 = true;
     }
 
-    //Changes the visual of maximum packets of player's inventory in HUD
+    /// <summary>
+    /// Changes the visual of maximum packages of player's inventory in HUD
+    /// </summary>
     public void ChangeMaximum(int newMax)
     {
         backpackMaximum.text = "/" + newMax.ToString();

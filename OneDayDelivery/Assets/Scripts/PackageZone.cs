@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// The Script informs relevant mechanics, when the Player enters the PackageZone
 public class PackageZone : MonoBehaviour
 {
     public GameObject playerCapsule;
@@ -12,7 +13,7 @@ public class PackageZone : MonoBehaviour
         playerPickupScript = playerCapsule.GetComponent<PlayerPickUpDrop>();
     }
 
-    //When enterining the Zone (we toggle on Inventory special rules)
+    //When enterining the Zone (current script toggles on Inventory special rules)
     private void OnTriggerEnter(Collider collider)
     {
         if(collider.gameObject.tag == "Player")
@@ -22,7 +23,7 @@ public class PackageZone : MonoBehaviour
         }
     }
 
-    //When leaving the Zone (we toggle off Inventory special rules)
+    //When leaving the Zone (current script toggles Inventory special rules)
     private void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
