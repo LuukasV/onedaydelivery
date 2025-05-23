@@ -58,7 +58,7 @@ You are welcome to fork or clone the repository for personal use or experimentat
 - Game has been developed with editor version **6000.0.34f1**
 - In Unity Hub, click **Add**, and select `OneDayDelivery` folder to open the project.
 
-## Developement
+## Development
 This repository is maintained exclusively by Team H.U.P.S. While the project will be open-source, external contributions are not accepted. You are, however, encouraged to fork and modify the game for your own purposes.
 
 ## License
