@@ -1,6 +1,8 @@
 # One Day Delivery 
 *A 3D First-Person Delivery Game Made with Unity by Team H.U.P.S.*
 
+![screenshot](images/mainmenu.png)
+
 **One Day Delivery** puts you in the nimble shoes of an orangutan working for H.U.P.S—delivering packages with speed, style, and precision. Built in Unity, the game blends light-hearted chaos with time-based challenges across vibrant 3D environments.
 
 ---
