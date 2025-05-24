@@ -1,16 +1,23 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using Utils.Physics;
 
-// This class determines functionality to objects that the player can grab and move.
+/// <summary>
+/// Main programmer: Jussi Kolehmainen
+/// Other progammers: Luukas Vuolle
+/// Majority of the programming was done by the main programmer. Other programmer added MailFinisher method.
+/// 
+/// This class determines functionality to objects that the player can grab and move.
+/// </summary>
 public class ObjectGrabbable : MonoBehaviour
 {
+    /// Variables for object grabbing and throwing
     private Rigidbody objectRigidBody;
     private Transform objectGrabPointTransform;
-
     private RigidbodyStorer rigidbodyStorer;
 
-
+    /// <summary>
+    /// Sets the rigidbody and rigidbody storer variables at game start.
+    /// </summary>
     private void Awake()
     {
         objectRigidBody = GetComponent<Rigidbody>();
@@ -18,26 +25,30 @@ public class ObjectGrabbable : MonoBehaviour
     }
 
     /// <summary>
-    ///gravity from grabbed objects and sets the position data to the player's grab point.
+    /// Gravity from grabbed objects and sets the position data to the player's grab point.
     /// </summary>
     /// <param name="objectGrabPointTransform">The transform of the grab point.</param>
     /// <param name="parent">The parent transform to set.</param>
     public void Grab(Transform objectGrabPointTransfrom, Transform parent)
     {
         this.objectGrabPointTransform = objectGrabPointTransfrom;
-        //objectRigidBody.useGravity = false;
 
         rigidbodyStorer.StoreValues(objectRigidBody);
         Destroy(objectRigidBody);
         transform.SetParent(parent);
     }
 
+    /// <summary>
+    /// Destroys the rigidbody of the object when it is no longer needed.
+    /// </summary>
     public void MailFinisher()
     {
         Destroy(objectRigidBody);
     }
 
-    // Drops an object that player is holding.
+    /// <summary>
+    /// Drops an object that player is holding.
+    /// </summary>
     public void Drop()
     {
         this.objectGrabPointTransform = null;
@@ -47,9 +58,6 @@ public class ObjectGrabbable : MonoBehaviour
             rigidbodyStorer.CopyValues(objectRigidBody);
         }
         transform.SetParent(null);
-
-        //objectRigidBody.useGravity = true;
-        //objectRigidBody.isKinematic = false;
     }
 
     /// <summary>
@@ -65,8 +73,9 @@ public class ObjectGrabbable : MonoBehaviour
         objectRigidBody.AddForce(direction * throwForce);
     }
 
-
-    // Moves objects that have been grabbed. Lerp adds smoothness to movement.
+    /// <summary>
+    /// Moves objects that have been grabbed. Lerp adds smoothness to movement.
+    /// </summary>
     private void FixedUpdate()
     {
         if (objectGrabPointTransform != null)

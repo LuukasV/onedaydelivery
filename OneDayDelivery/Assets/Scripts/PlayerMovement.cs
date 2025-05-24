@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Player movement script that allows the player to control a character. Adds mobility to character.
-/// If movement is jittery. Test interpolate = None and collision detection = Discrete changes.
+/// Main programmer: Jussi Kolehmainen
+/// Other progammers: Jari-Pekka Riihinen and Luukas Vuolle
+/// Majority of the programming was done by the main programmer. Other programmers added a boolean and an if statment to disable movement and 
+/// to check if any upgrades are in effect.
+/// 
+/// Player movement script that allows the player to control a character. Also gives functionality to increasing player's jump force and collision detection.
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     // Left, right, forward and back player movement input.
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
     Vector3 moveDirection;
 
     // Variables determining player movement speed and drag.
@@ -32,31 +32,27 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode restartKey = KeyCode.F1;
     public KeyCode walkKey = KeyCode.LeftShift;
 
     // Variables used for registering player input.
-    bool jumpingInput;
-    bool restartInput;
-    bool walkInput;
+    private bool jumpingInput;
+    private bool walkInput;
 
 
-    [Header("Changable values for play testing")]
-    [SerializeField] private float throwForceIncrAmount;
+    [Header("Increase amount of player variables at shop")]
+    //[SerializeField] private float throwForceIncrAmount;
     [SerializeField] private float jumpForceIncrAmount;
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    private bool grounded;
 
     // Variables for character physics.
-    // serialize field here private
     public Transform orientationAndGroundCheck;
-    Rigidbody rb;
+    private Rigidbody rb;
 
-    [Header("Variable change access")]
-    // how does this work in practice? What variable type. with player pickup drop type.
+    [Header("Variable for access to child")]
     [SerializeField] private Transform accessToChild;
 
     [Header("Variable for disabling moving")]
@@ -74,11 +70,6 @@ public class PlayerMovement : MonoBehaviour
         {
             MyInput();
             SpeedControl();
-        }
-
-        if (restartInput)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         if (grounded)
@@ -107,9 +98,6 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
         jumpingInput = false;
-        //Debug.Log(rb.linearVelocity.x);
-        //Debug.Log(rb.linearVelocity.magnitude);
-        //Debug.Log(rb.linearVelocity.y);
 
         if (!grounded)
         {
@@ -137,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
         ResetJump();
 
-        //We determine, if any upgrades are in effect
+        // Determines, if any upgrades are in effect
         if (GameData.item2Active)
         {
             ActivateJumpBuff();
@@ -152,7 +140,6 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
         jumpingInput = jumpingInput || Input.GetKey(jumpKey);
-        restartInput = Input.GetKey(restartKey);
         walkInput = Input.GetKey(walkKey);
     }
 
@@ -215,33 +202,26 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="other"> Object that the player collided with </param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("jumpBuff"))
-        {
-            jumpForce += jumpForceIncrAmount;
-            other.gameObject.SetActive(false);
-        }
-        else if (other.gameObject.CompareTag("throwBuff"))
-        {
-            accessToChild.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
-            other.gameObject.SetActive(false);
-        }
-        else if (other.gameObject.CompareTag("npcDog"))
+        if (other.gameObject.CompareTag("npcDog"))
         {
             accessToChild.GetComponent<PlayerPickUpDrop>().packageThievery(other.gameObject.GetComponent<AI_DogSimple>().npcInformation());
         }
     }
 
-    //Activates Throw Buff
-    private void ActivateThrowBuff()
-    {
-        accessToChild.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
-        //Debug.Log("Player has a throwbuff activated");
-    }
+    /// <summary>
+    /// Increases throw force of the player character.
+    /// CODE NOT IMPLEMENTED IN GAME IN CURRENT VERSION.
+    /// </summary>
+    //private void ActivateThrowBuff()
+    //{
+    //    accessToChild.GetComponent<PlayerPickUpDrop>().throwForceBooster(throwForceIncrAmount);
+    //}
 
-    //Activates Jump Buff
+    /// <summary>
+    /// Increases jump force of the player character.
+    /// </summary>
     private void ActivateJumpBuff()
     {
         jumpForce += jumpForceIncrAmount;
-        //Debug.Log("Player has a jumpbuff activated");
     }
 }

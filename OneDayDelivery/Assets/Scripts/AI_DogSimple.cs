@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 
 /// <summary>
+/// Programmer: Jussi Kolehmainen
 /// NPC script intended for guard dog use. Dog detects and chases player. If player is caught, steals package and throws it.
 /// </summary>
 public class AI_DogSimple : MonoBehaviour
@@ -14,42 +15,32 @@ public class AI_DogSimple : MonoBehaviour
     [SerializeField] private float zLargePatrolPointRange;
     [SerializeField] private float zSmallPatrolPointRange;
 
-    // Chase variables
-    [Header("movement variables")]
+    [Header("Movement variables")]
     [SerializeField] private float patrolSpeed;
     [SerializeField] private float chaseSpeed;
     [SerializeField] private float startWaitTime;
     [SerializeField] private float currentWaitTime;
+    private Vector3 walkPoint;
+    private bool walkPointSet;
+
+    [Header("Push and grabpoint variables")]
     [SerializeField] private float dogPushPlayerStr;
     [SerializeField] private float dogPushDisableMovementTime;
-
-
     public Transform dogGrabPoint;
     [SerializeField] private float dogThrowForce;
-    private bool hasStolenPackage = false;
 
-    private float lastSeenTime = Mathf.NegativeInfinity;
-    [SerializeField] private float playerMemoryDuration = 1.5f;
-
-    private NavMeshAgent agent;
-    [Header("Player detection and NPC movement")]
-    private Transform playerTransform;
-    [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
-
-    //Environment view
     [Header("NPC sight and detection")]
     public float viewRadius = 15;
     public float viewAngle = 90;
     public LayerMask obstacleMask;
-    bool m_PlayerInRange;
-    bool m_IsPatrol;
-    Vector3 playerLastPosition = Vector3.zero;
-    Vector3 m_PlayerPosition;
-
-    // Patrol variables
-    [Header("Patrol walkPoint for debugging")]
-    public Vector3 walkPoint;
-    bool walkPointSet;
+    private bool m_PlayerInRange;
+    private bool m_IsPatrol;
+    [SerializeField] private float playerMemoryDuration = 1.5f;
+    [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
+    private Transform playerTransform;
+    private bool hasStolenPackage = false;
+    private float lastSeenTime = Mathf.NegativeInfinity;
+    private NavMeshAgent agent;
 
     [Header("Cone color for debugging")]
     public Color coneColor = Color.green; // Color for the cone for debugging in UNITY.
@@ -82,7 +73,6 @@ public class AI_DogSimple : MonoBehaviour
     /// </summary>
     void Start()
     {
-        m_PlayerPosition = Vector3.zero;
         m_IsPatrol = true;
         currentWaitTime = startWaitTime;
     }
@@ -124,10 +114,6 @@ public class AI_DogSimple : MonoBehaviour
 
         agent.SetDestination(playerTransform.position);
 
-        //Debug logs from debugging purposes if necessary.
-        //Debug.Log("DOG Agent destination: " + agent.destination);
-        //Debug.Log("DOG Remaining distance: " + agent.remainingDistance);
-
         // if player isn't visible stop and continue patrolling.
         if (m_PlayerInRange == false)
         {
@@ -153,7 +139,7 @@ public class AI_DogSimple : MonoBehaviour
         // if walkPointSet is false, search one and set it to true.
         if (!walkPointSet) SearchWalkPoint();
 
-        // if walkPointSet is true, set it as destination and go there.
+        // if walkPointSet is true, set walkPoint as destination and go there.
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
@@ -200,11 +186,9 @@ public class AI_DogSimple : MonoBehaviour
             // if player is within a certain angle, he will be detected
             if (angle < viewAngle / 2f && !Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
             {
-                //Debug.Log("I see within angle and radius");
                 m_PlayerInRange = true;
                 lastSeenTime = Time.time;
                 m_IsPatrol = false;
-                m_PlayerPosition = playerCollider.transform.position;
                 break;
             }
         }
@@ -216,22 +200,12 @@ public class AI_DogSimple : MonoBehaviour
     /// <param name="stolenPackage"> A package that was stolen from the player </param>
     public void runAwayAndThrow(ObjectGrabbable stolenPackage)
     {
-        //if (!m_PlayerInRange || hasStolenPackage || stolenPackage == null)
-        //{
-        //    Debug.Log("Dog can't steal. In range: " + m_PlayerInRange + " | Already stole: " + hasStolenPackage);
-        //    return;
-        //}
-
-        //Debug.Log(m_PlayerInRange + " " + hasStolenPackage);
-        //if (!m_PlayerInRange || hasStolenPackage) return;
-        //hasStolenPackage = true;
         if (!CanSteal() || stolenPackage == null) return;
 
         hasStolenPackage = true; // 
         StartCoroutine(SmoothTurnAndThrow(stolenPackage));
         PushPlayerAway();
     }
-
 
     /// <summary>
     /// If player has a package, he is pushed away and his movement controls are disabled for a set time.
@@ -286,7 +260,7 @@ public class AI_DogSimple : MonoBehaviour
             yield return null;
         }
 
-        // Ensure final rotation is exactly 180� rotated
+        // Ensure final rotation is exactly 180 rotated
         transform.rotation = endRot;
 
         yield return new WaitForSeconds(0.1f); // Short delay for realism

@@ -1,15 +1,19 @@
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Programmer: Jussi Kolehmainen
+/// NPC script for NPC's that move between different waypoints.
+/// </summary>
 public class AI_HarmlessWaypoint : MonoBehaviour
 {
+    [Header("Movement variables")]
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float speedWalk;
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private int m_CurrentWaypointIndex;
 
+    [Header("Wait time on points and display for current wait time")]
     [SerializeField] private float startWaitTime = 4;
     [SerializeField] private float currentWaitTime;
 
@@ -22,20 +26,14 @@ public class AI_HarmlessWaypoint : MonoBehaviour
         agent.isStopped = false;
         agent.speed = speedWalk;
         agent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-        //(waypoints[m_CurrentWaypointIndex].position);
-
         currentWaitTime = startWaitTime;
     }
 
     /// <summary>
-    /// Update is called once per frame.
+    /// Runs methods that move the NPC to a  waypoint and checks if the NPC has reached a waypoint and is ready to move to another one.
     /// </summary>
     void Update()
     {
-        //Debug.Log("Pathpending: " + agent.pathPending);
-        //Debug.Log("pathStatus: " + agent.pathStatus);
-        // Sets npc's destination to the next waypoint and checks if the NPC has reached the waypoint.
-        //agent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             // When wait time is over, NPC will move to the next waypoint and reset wait timer.
