@@ -1,33 +1,34 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-// Mechanics for handling objects: pickup, throw, put in inventory etc.
+/// <summary>
+/// Main programmer: Jussi Kolehmainen
+/// Other progammers: Luukas Vuolle and Milo Hankama
+/// Majority of the programming was done by the main programmer. Other programmers added code to play sounds at packageThievery method and linked this 
+/// script to package zone and UI scripts.
+/// 
+/// Mechanics for handling objects: pickup, throw, put in inventory etc.
+/// </summary>
+
 public class PlayerPickUpDrop : MonoBehaviour
 {
-    [SerializeField] private Transform playerParentBody;
+    [Header("Variables for object grabbing and throwing")]
+    //[SerializeField] private Transform playerParentBody;
     [SerializeField] private Transform playerCameraTransform;
     [SerializeField] private Transform objectGrabPointTransform;
     [SerializeField] private LayerMask pickUpLayerMask;
     [SerializeField] private Transform parent;
-
     private ObjectGrabbable objectGrabbable;
-
-    private UIManager uiManager;
-
-    private PlayerMovement speedChanger;
     private ObjectGrabbable[] inventory;
     private int indexInventory;
-    Transform parentTransform;
+    private Transform parentTransform;
 
-    [Header("Changable values for play testing")]
+    // UI variable
+    private UIManager uiManager;
+
+    [Header("Packet handling variables")]
     [SerializeField] private int sizeOfInventory;
-    [SerializeField] private int speedChangeOfInventory;
     [SerializeField] private float throwForce;
     [SerializeField] private float pickUpDistance;
-
 
     [Header("Keybinds")]
     public KeyCode throwKey = KeyCode.F;
@@ -38,27 +39,28 @@ public class PlayerPickUpDrop : MonoBehaviour
     [Header("Prefab of object that is conjured in PackageZone")]
     public GameObject packagePrefab;
 
-    private bool withinPackageZone = false; //if bool is true (toggled in different code), player is allowed to conjure packages out of thin air
+    [Header("Audio clips")]
     public AudioClip dogAlert;
     public AudioClip dogPush;
 
+    //if bool is true (toggled in different code), player is allowed to conjure packages out of thin air
+    private bool withinPackageZone = false; 
+
     /// <summary>
-    /// Set necessary variables once.
+    /// Set necessary variables at game start.
     /// </summary>
     void Start()
     {
-        //UIManager script is linked with the PlayerUI component
+        // UIManager script is linked with the PlayerUI component
         uiManager = GameObject.FindWithTag("PlayerUI").GetComponent<UIManager>();
 
-        //We determine if inventory upgrades are in effect
+        // Determines, if inventory upgrades are in effect
         if (GameData.item1Active)
         {
-            //Debug.Log("Player has a inventorybuff activated");
             sizeOfInventory = 10;
             uiManager.ChangeMaximum(10);
         }
 
-        speedChanger = playerParentBody.GetComponent<PlayerMovement>();
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
         pickUpDistance = 4f;
@@ -77,7 +79,6 @@ public class PlayerPickUpDrop : MonoBehaviour
     /// </summary>
     public void TogglePackageZone(bool active)
     {
-        // Debug.Log("PackageZone is: " + active);
         withinPackageZone = active;
     }
 
@@ -94,11 +95,6 @@ public class PlayerPickUpDrop : MonoBehaviour
                 // Not carrying an object, try to grab.
                 if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
                 {
-                    //Debuging logs if necessary.
-                    //Debug.Log("Raycast hit: " + raycastHit.transform.name);
-                    //Debug.Log("Raycast hit object with tag: " + raycastHit.transform.tag);
-                    //Debug.Log("Raycast hit collider with tag: " + raycastHit.collider.transform.tag);
-
                     if (raycastHit.collider.transform.CompareTag("pickupCollider"))
                     {
                         parentTransform = raycastHit.collider.transform.parent;
@@ -134,7 +130,6 @@ public class PlayerPickUpDrop : MonoBehaviour
                 inventory[indexInventory] = objectGrabbable;
                 objectGrabbable.gameObject.SetActive(false);
                 indexInventory++;
-                speedChanger.moveSpeed -= speedChangeOfInventory;
                 objectGrabbable = null;
                 uiManager.AddPointToBackpackScore();
             }
@@ -160,7 +155,6 @@ public class PlayerPickUpDrop : MonoBehaviour
                     inventory[indexInventory] = objectGrabbable;
                     objectGrabbable.gameObject.SetActive(false);
                     indexInventory++;
-                    speedChanger.moveSpeed -= speedChangeOfInventory;
                     uiManager.AddPointToBackpackScore();
                     objectGrabbable = null;
                 }
@@ -168,18 +162,17 @@ public class PlayerPickUpDrop : MonoBehaviour
         }
 
 
-        // Get packages out of inventory
+        // Get packages out of inventory, if player doesn't have a package in hands.
         else if (Input.GetKeyDown(outOfPocket) && objectGrabbable == null)
         {
             if (0 < indexInventory)
             {
                 objectGrabbable = inventory[indexInventory-1].GetComponent<ObjectGrabbable>();
                 objectGrabbable.transform.position = objectGrabPointTransform.transform.position;
-                objectGrabbable.transform.rotation = Quaternion.Euler(0, 0, 0);
+                objectGrabbable.transform.rotation = objectGrabPointTransform.transform.rotation;
                 objectGrabbable.gameObject.SetActive(true);
                 objectGrabbable.Grab(objectGrabPointTransform, parent);
                 indexInventory--;
-                speedChanger.moveSpeed += speedChangeOfInventory;
 
                 uiManager.RemovePointFromBackpackScore();
             }
@@ -195,7 +188,8 @@ public class PlayerPickUpDrop : MonoBehaviour
     }
 
     /// <summary>
-    /// A method used for removing packages from player. Checks if the collided NPC dog can steal a package or not. If it can, run other methods.Otherwise return.
+    /// A method used for removing packages from player. Checks if the collided NPC dog can steal a package or not. If it can, run methods for stealing.
+    /// Otherwise return.
     /// </summary>
     /// <param name="collidedDog"> NPC that collided with player </param>
     public void packageThievery(AI_DogSimple collidedDog)
@@ -205,9 +199,6 @@ public class PlayerPickUpDrop : MonoBehaviour
         // Npc steals a package from the player's hands, not from inventory. Then turns and throws it away.
         if (objectGrabbable != null)
         {
-            //Debugging logs if necessary.
-            //Debug.Log("Player has package in hand.");
-
             objectGrabbable.Grab(collidedDog.dogGrabPoint, collidedDog.transform);
             collidedDog.runAwayAndThrow(objectGrabbable);
             objectGrabbable = null;
@@ -219,8 +210,6 @@ public class PlayerPickUpDrop : MonoBehaviour
         // Npc steals a package from the player's inventory. Then turns and throws it away.
         else if (indexInventory != 0)
         {
-            //Debugging logs if necessary.
-            //Debug.Log("Player has package in inventory. Transform info from dog:" + collidedDog.transform.position);
 
             objectGrabbable = inventory[indexInventory-1].GetComponent<ObjectGrabbable>();
             objectGrabbable.transform.position = collidedDog.dogGrabPoint.position;
@@ -228,7 +217,6 @@ public class PlayerPickUpDrop : MonoBehaviour
             objectGrabbable.gameObject.SetActive(true);
             objectGrabbable.Grab(collidedDog.dogGrabPoint, collidedDog.transform);
             indexInventory--;
-            speedChanger.moveSpeed += speedChangeOfInventory;
 
             collidedDog.runAwayAndThrow(objectGrabbable);
             objectGrabbable = null;

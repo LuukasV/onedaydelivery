@@ -1,11 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Utils.Physics
 {
+    /// <summary>
+    /// Code was provided almost completely by a university tutor Pyry L who helped with this script. Slight modifications made by Jussi Kolehmainen.
+    /// 
+    /// Script stores and copies rigidbody values.
+    /// </summary>
     public class RigidbodyStorer
     {
+        // Variables for storing rigidbody values
         private float mass = 0;
         private float drag = 0;
         private float angDrag = 0;
