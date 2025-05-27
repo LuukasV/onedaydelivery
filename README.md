@@ -45,6 +45,8 @@ You are an orangutan delivery employee at H.U.P.S, and your mission is to delive
 
 To try the game or explore the code:
 
+Game is published at itch.io TODO: ADD LINK
+
 ```bash
 git clone https://github.com/LuukasV/postipeli.git
 ```
