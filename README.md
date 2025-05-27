@@ -9,11 +9,11 @@
 
 ## Team H.U.P.S
 
-- **Producer**: Jari-Pekka Riihinen  
-- **Game Design**: Matti Savolainen  
-- **Graphics**: Julia Rantanen  
+- **Producer**: Jari-Pekka Riihinen  [(@Peketeus)](https://github.com/Peketeus)
+- **Game Design**: Matti Savolainen  [(@TheGameArchitect)](https://github.com/TheGameArchitect)
+- **Graphics**: Julia Rantanen  [(@joulupuuro)](https://github.com/joulupuuro)
 - **Sound Design**: Milo Hankama  
-- **Programmers**: Jussi Kolehmainen & Luukas Vuolle  
+- **Programmers**: Jussi Kolehmainen & Luukas Vuolle  [(@Joutun)](https://github.com/Joutun) & [(@LuukasV)](https://github.com/LuukasV)
 
 ---
 
