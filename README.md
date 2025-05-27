@@ -12,7 +12,7 @@
 - **Producer**: Jari-Pekka Riihinen  [(@Peketeus)](https://github.com/Peketeus)
 - **Game Design**: Matti Savolainen  [(@TheGameArchitect)](https://github.com/TheGameArchitect)
 - **Graphics**: Julia Rantanen  [(@joulupuuro)](https://github.com/joulupuuro)
-- **Sound Design**: Milo Hankama  
+- **Sound Design**: Milo Hankama  [(@Smelty404)](https://github.com/Smelty404)
 - **Programmers**: Jussi Kolehmainen & Luukas Vuolle  [(@Joutun)](https://github.com/Joutun) & [(@LuukasV)](https://github.com/LuukasV)
 
 ---
