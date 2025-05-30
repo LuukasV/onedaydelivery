@@ -1,7 +1,13 @@
 using UnityEngine;
 
-//Script that informs a Sound Effect to play sound, when something has entered the Collision/Trigger area,
-//Also teleport the detected object inside the mailbox
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// Other progammers: Jussi Kolehmainen and Jari-Pekka Riihinen
+/// Other programmers contribution was better communication with player's inventory scripts, and activation of confetti on package delivery event
+/// 
+/// Script that informs a Sound Effect to play sound, when something has entered the Collision/Trigger area,
+/// Also teleport the detected object inside the mailbox
+/// </summary>
 public class GotMailDetector : MonoBehaviour
 {
     public AudioSource audioSource; //Package delivered sound effect

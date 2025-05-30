@@ -2,9 +2,13 @@ using System;
 using UnityEngine;
 using System.IO;
 
-//This class contains all data that we want to carry between scenes
-//It can be accessed anywhere with GameData.value = orange;
-//As a default the GameData must be updates with SaveSystem every Application restart/start
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// This class contains all data that we want to carry between scenes
+/// It can be accessed anywhere with GameData.value = orange;
+/// As a default the GameData must be updates with SaveSystem every Application restart/start
+/// </summary>
 public static class GameData
 {
     public static bool level1_star1 = false;
@@ -24,9 +28,13 @@ public static class GameData
     public static int starsSpent = 0;
 }
 
-//Controls the Saving/Loading of GameData, takes all savable data from GameData
-//On command, loads/writes the (possible) saved data from a file to GameData
-//On command, cleares saved data from a file
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Controls the Saving/Loading of GameData, takes all savable data from GameData
+/// On command, loads/writes the (possible) saved data from a file to GameData
+/// On command, cleares saved data from a file
+/// </summary>
 public static class SaveSystem
 {
     public const string FILENAME_SAVEDATA = "/savedata.txt";

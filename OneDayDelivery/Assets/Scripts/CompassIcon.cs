@@ -1,7 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//Inner mechanics of CompassIcon Class
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Inner mechanics of CompassIcon Class
+/// </summary>
 public class CompassIcon : MonoBehaviour
 {
     public Sprite icon;

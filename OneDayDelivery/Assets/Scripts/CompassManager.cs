@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Script to make the UI's compass work
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// Code based on b3agz's RPG Guest Compass: https://www.youtube.com/watch?v=MRAVwaGrmrk
+/// 
+/// Script to make the UI's compass work
+/// </summary>
 public class CompassManager : MonoBehaviour
 {
     public GameObject iconPrefab;

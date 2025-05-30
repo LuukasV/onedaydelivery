@@ -1,7 +1,11 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-// Management script to the item/upgrade shop, its UI elements, and functions
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Management script to the item/upgrade shop, its UI elements, and functions
+/// </summary>
 public class ShopFunctionality : MonoBehaviour
 {
     public GameObject soldIcon1;

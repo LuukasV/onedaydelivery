@@ -1,6 +1,10 @@
 using UnityEngine;
 
-//Detects if something hits the collision area, and tells the game to score the fourth objective
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Detects if something hits the collision area, and tells the game to score the fourth objective
+/// </summary>
 public class HoopScorer : MonoBehaviour
 {
     public AudioSource audioSource;

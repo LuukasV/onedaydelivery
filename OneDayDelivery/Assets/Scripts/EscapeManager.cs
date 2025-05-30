@@ -1,6 +1,10 @@
 using UnityEngine;
 
-// Mechanics when the Player Enters the Escape Zone
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Mechanics when the Player Enters the Escape Zone
+/// </summary>
 public class EscapeManager : MonoBehaviour
 {
     private UIManager uiManager;

@@ -6,9 +6,13 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using System;
 
-//Manages the Player's Point system, and general UI mechanics
-//Also works as a general master script for inter-script operations
-//Includes Level Changes, and Saving
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Manages the Player's Point system, and general UI mechanics
+/// Also works as a general master script for inter-script operations
+/// Includes Level Changes, and Saving
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     private int boxesMailedScore;

@@ -2,10 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Controller for the Main Menu and its functions
-//Includes functions for all main menu buttons
-//Manages information on player score/money between levels
-//Manages Savings, as PlayerUI is assumed to be disabled
+
+/// <summary>
+/// Main programmer: Luukas Vuolle
+/// 
+/// Controller for the Main Menu and its functions
+/// Includes functions for all main menu buttons
+/// Manages information on player score/money between levels
+/// Manages Savings, as PlayerUI is assumed to be disabled
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     public GameObject popUpCanvas;
