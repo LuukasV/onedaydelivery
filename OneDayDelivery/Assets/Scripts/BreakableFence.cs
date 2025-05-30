@@ -1,6 +1,7 @@
 using UnityEngine;
 
 /// <summary>
+/// Programmer: Jari-Pekka Riihinen
 /// Simple script for wooden fence asset. The fence will break if player or package touches it
 /// </summary>
 public class BreakableFence : MonoBehaviour

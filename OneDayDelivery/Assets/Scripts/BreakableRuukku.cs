@@ -1,6 +1,7 @@
 using UnityEngine;
 
 /// <summary>
+/// Programmer: Jari-Pekka Riihinen
 /// Script for breaking 3D object Vase. Script replaces intact vase with the broken variant with loose shards
 /// </summary>
 public class BreakableRuukku : MonoBehaviour

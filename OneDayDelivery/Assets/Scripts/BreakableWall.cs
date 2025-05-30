@@ -1,6 +1,7 @@
 using UnityEngine;
 
 /// <summary>
+/// Programmer: Jari-Pekka Riihinen
 /// Script for breaking corcrete walls. The walls can be destroyed by packages or by player
 /// </summary>
 public class BreakableWall : MonoBehaviour

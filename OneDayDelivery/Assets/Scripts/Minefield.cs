@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
+/// Programmer: Jari-Pekka Riihinen
 /// Minefield acts as a boundary to the level. When activated, the minefield throws the player towards to the center of the level
 /// </summary>
 public class Minefield : MonoBehaviour

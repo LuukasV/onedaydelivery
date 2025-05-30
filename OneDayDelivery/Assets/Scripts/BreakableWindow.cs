@@ -1,6 +1,7 @@
 using UnityEngine;
 
 /// <summary>
+/// Programmer: Jari-Pekka Riihinen
 /// Simple class for breaking windows. Windows have intact and broken variant. After contact the window will be replaced by the broken variant.
 /// </summary>
 public class BreakableWindow : MonoBehaviour
