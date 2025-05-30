@@ -45,10 +45,10 @@ You are an orangutan delivery employee at H.U.P.S, and your mission is to delive
 
 To try the game or explore the code:
 
-Game is published at itch.io TODO: ADD LINK
+Game is published at https://hups.itch.io/one-day-delivery
 
 ```bash
-git clone https://github.com/LuukasV/postipeli.git
+git clone https://github.com/LuukasV/onedaydelivery.git
 ```
 
 You are welcome to fork or clone the repository for personal use or experimentation.
