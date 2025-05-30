@@ -77,6 +77,5 @@ public class GotMailDetector : MonoBehaviour
             //Removes the postboxe's icon in the Player's Compass
             uiCompassManager.disableSpecificIcon(id);
         }
-
     }
 }

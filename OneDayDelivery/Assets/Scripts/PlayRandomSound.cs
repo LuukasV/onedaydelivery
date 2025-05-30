@@ -1,10 +1,12 @@
 using UnityEngine;
 
-//Plays a random sound from a list of sound effects with the selected audiosource
+/// <summary>
+/// Programmer: Milo Hankama
+/// Plays a random sound from a list of sound effects with the selected audiosource
+/// </summary>
 public class PlayRandomSound : MonoBehaviour
 {
     public AudioSource audioSource;
-
     public AudioClip[] audioClips;
 
     void OnTriggerEnter()

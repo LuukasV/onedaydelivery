@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// script provided by chatGPT for slight camera sway on main menu
+/// </summary>
 public class MenuCameraSway : MonoBehaviour
 {
     public float swayAmount = 0.1f;

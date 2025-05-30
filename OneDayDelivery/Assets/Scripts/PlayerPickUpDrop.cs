@@ -63,6 +63,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
         indexInventory = 0;
         inventory = new ObjectGrabbable[sizeOfInventory];
+        pickUpDistance = 4f;
     }
 
     /// <summary>

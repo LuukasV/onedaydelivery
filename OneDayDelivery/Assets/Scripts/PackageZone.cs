@@ -1,6 +1,9 @@
 using UnityEngine;
 
-// The Script informs relevant mechanics, when the Player enters the PackageZone
+/// <summary>
+/// Programmer: Luukas Vuolle
+/// The Script informs relevant mechanics, when the Player enters the PackageZone
+/// </summary>
 public class PackageZone : MonoBehaviour
 {
     public GameObject playerCapsule;
