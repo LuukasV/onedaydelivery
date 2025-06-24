@@ -7,6 +7,12 @@
 
 ---
 
+## Download
+
+Playable build can be downloaded at https://hups.itch.io/one-day-delivery
+
+---
+
 ## Team H.U.P.S
 
 - **Producer**: Jari-Pekka Riihinen  [(@Peketeus)](https://github.com/Peketeus)
